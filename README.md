@@ -8,3 +8,8 @@ link Drive [Click here] (https://drive.google.com/file/d/172w2YGL1TIymnjp5dK4crz
 Thiết kế [Click here] (https://www.figma.com/design/Sg9lS0RXcjEa2iYdt1kWKW/Untitled?m=auto&t=gszmFX7h7oprxAk2-6)
 //
 Database [Click here] (https://www.drawdb.app/editor)
+
+1️⃣ Thiết kế Database (ERD + Table)
+2️⃣ Thiết kế Kiến trúc hệ thống
+3️⃣ Thiết kế API (nếu có backend)
+4️⃣ Thiết kế luồng dữ liệu (DFD hoặc Sequence chi tiết)
