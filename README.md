@@ -7,7 +7,7 @@ link Drive [Click here] (https://drive.google.com/file/d/172w2YGL1TIymnjp5dK4crz
 //
 Thiết kế [Click here] (https://www.figma.com/design/Sg9lS0RXcjEa2iYdt1kWKW/Untitled?m=auto&t=gszmFX7h7oprxAk2-6)
 //
-Database [Click here] ([https://www.drawdb.app/editor](https://www.drawdb.app/editor?shareId=0792c477f3164bd686a1158e7e2b16e6))
+Database [Click here] (https://www.drawdb.app/editor?shareId=0792c477f3164bd686a1158e7e2b16e6)
 
 1️⃣ Thiết kế Database (ERD + Table)
 2️⃣ Thiết kế Kiến trúc hệ thống
