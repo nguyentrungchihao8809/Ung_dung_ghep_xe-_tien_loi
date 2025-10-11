@@ -61,4 +61,10 @@ public class xacthuc {
     public void setGioitinh(String gioitinh) {
         this.gioitinh = gioitinh;
     }
+    public String getBienso() {
+        return bienso;
+    }
+    public void setBienso(String bienso) {
+        this.bienso = bienso;
+    }
 }
