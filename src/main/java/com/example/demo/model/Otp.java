@@ -9,8 +9,8 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "Otp")
-public class Otp {
+@Table(name = "otp")
+public class otp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idotp;
@@ -20,8 +20,8 @@ public class Otp {
     private LocalDateTime ThoiGianHetHan;
     private Boolean used;
     // Constructor mặc định
-    public Otp() {}
-    public Otp(Long idotp, String SoDienThoai, String Otp_code, LocalDateTime ThoiGianHetHan, Boolean used) {   
+    public otp() {}
+    public otp(Long idotp, String SoDienThoai, String Otp_code, LocalDateTime ThoiGianHetHan, Boolean used) {   
         this.idotp = idotp;       
         this.SoDienThoai = SoDienThoai;
         this.Otp_code = Otp_code;       

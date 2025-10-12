@@ -7,8 +7,8 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "DanhGia")
-public class DanhGia {
+@Table(name = "danhgia")
+public class danhgia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long iddanhgia;
@@ -19,8 +19,8 @@ public class DanhGia {
     private Long sosao;
     private String cmt;
     // Constructor mặc định
-    public DanhGia() {}
-    public DanhGia(Long iddanhgia, Long idchuyen, Long nguoigui_id, Long nguoinhan_id, Long sosao, String cmt) {   
+    public danhgia() {}
+    public danhgia(Long iddanhgia, Long idchuyen, Long nguoigui_id, Long nguoinhan_id, Long sosao, String cmt) {   
         this.iddanhgia = iddanhgia;       
         this.idchuyen = idchuyen;
         this.nguoigui_id = nguoigui_id;       
