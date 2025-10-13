@@ -1,24 +1,55 @@
 package com.example.hatd
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.google.firebase.FirebaseApp
-import com.google.firebase.database.FirebaseDatabase
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.core.view.WindowCompat
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.hatd.ui.auth.gioithieu.GioiThieuScreen
+import com.example.hatd.ui.auth.login.loginintro
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this)
 
-        val db = FirebaseDatabase.getInstance().getReference("test")
-        db.setValue("Firebase connected ✅")
-            .addOnSuccessListener { Log.d("Firebase", "Ghi thành công!") }
-            .addOnFailureListener { e -> Log.e("Firebase", "Lỗi: ${e.message}") }
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            // TODO: Jetpack Compose UI
+            val systemUiController = rememberSystemUiController()
+            val useDarkIcons = true
+
+            SideEffect {
+                systemUiController.setSystemBarsColor(
+                    color = Color.White,
+                    darkIcons = useDarkIcons
+                )
+            }
+
+            val navController = rememberNavController()
+
+            MaterialTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = Color.White
+                ) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = "gioithieu"
+                    ) {
+                        composable("gioithieu") { GioiThieuScreen(navController) }
+                        composable("login") { loginintro() }
+                    }
+                }
+            }
         }
     }
 }
