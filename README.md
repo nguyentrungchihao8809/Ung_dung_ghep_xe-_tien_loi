@@ -1,6 +1,8 @@
 # Ứng dụng ghép xe tiện lợi
 ghép xe trên cùng tuyến đường
 
+Link folder ảnh (https://drive.google.com/drive/folders/15wG8_2a0kdW6wWH11o8rjWCHMoG5D4Z7?usp=sharing)
+
 Phân tích [Click here] (https://app.diagrams.net/)
 
 link Drive [Click here] (https://drive.google.com/file/d/172w2YGL1TIymnjp5dK4crzzqsdPHgunf/view?usp=drive_link)
