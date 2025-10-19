@@ -16,7 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.hatd.ui.auth.gioithieu.GioiThieuScreen
 import com.example.hatd.ui.auth.login.loginintro
 import com.example.hatd.ui.user.TaoYeuCauChuyenDiScreen.TaoYeuCauChuyenDiScreen
-
+import com.example.hatd.ui.user.DanhGiaDriverScreen.DanhGiaDriverScreen
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
@@ -45,11 +45,12 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(
                         navController = navController,
-                        startDestination = "TaoYeuCauChuyenDi"
+                        startDestination = "DanhGiaDriver"
                     ) {
                         composable("gioithieu") { GioiThieuScreen(navController) }
                         composable("login") { loginintro() }
                         composable("TaoYeuCauChuyenDi") {TaoYeuCauChuyenDiScreen() }
+                        composable("DanhGiaDriver") {DanhGiaDriverScreen() }
 
 
                     }
