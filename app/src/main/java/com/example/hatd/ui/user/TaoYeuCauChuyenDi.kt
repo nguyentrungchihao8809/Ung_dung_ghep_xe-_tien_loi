@@ -69,13 +69,16 @@ fun TaoYeuCauChuyenDiScreen(onBackClick: () -> Unit = {}) {
                 Box(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center
+
                 ) {
                     Text(
                         text = "Đi cùng HATD",
                         color = Color(0xFF1976D2),
                         fontWeight = FontWeight.Bold,
-                        fontSize = 22.sp
+                        fontSize = 22.sp,
+                        modifier = Modifier.padding(top = 30.dp)
                     )
+
                 }
             }
 
