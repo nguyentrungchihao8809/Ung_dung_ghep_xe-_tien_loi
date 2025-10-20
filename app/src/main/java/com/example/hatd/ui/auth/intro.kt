@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hatd.R
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 // ------------------------- TỔNG HỢP PAGER -------------------------
 @OptIn(ExperimentalFoundationApi::class)
@@ -85,7 +84,7 @@ fun DotsIndicator(totalDots: Int, selectedIndex: Int, modifier: Modifier = Modif
 fun Intro1Screen() {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.bgintro),
+            painter = painterResource(id = R.drawable.bg),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -101,7 +100,7 @@ fun Intro1Screen() {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.bg1intro),
+            painter = painterResource(id = R.drawable.bg1),
             contentDescription = null,
             modifier = Modifier
                 .padding(start = 55.dp, top = 200.dp)
@@ -159,7 +158,7 @@ fun Intro1Screen() {
 fun Intro2Screen() {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.bgintro),
+            painter = painterResource(id = R.drawable.bg),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -175,7 +174,7 @@ fun Intro2Screen() {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.bg2intro),
+            painter = painterResource(id = R.drawable.bg2),
             contentDescription = null,
             modifier = Modifier
                 .padding(start = 55.dp, top = 200.dp)
@@ -232,7 +231,7 @@ fun Intro2Screen() {
 fun Intro3Screen() {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.bgintro),
+            painter = painterResource(id = R.drawable.bg),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -246,9 +245,8 @@ fun Intro3Screen() {
                 .align(Alignment.TopStart)
                 .padding(16.dp)
         )
-
         Image(
-            painter = painterResource(id = R.drawable.bg1intro),
+            painter = painterResource(id = R.drawable.bg1),
             contentDescription = null,
             modifier = Modifier
                 .padding(start = 55.dp, top = 200.dp)
@@ -306,7 +304,7 @@ fun Intro3Screen() {
 fun Intro4Screen() {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.bgintro),
+            painter = painterResource(id = R.drawable.bg),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -322,7 +320,7 @@ fun Intro4Screen() {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.bg1intro),
+            painter = painterResource(id = R.drawable.bg1),
             contentDescription = null,
             modifier = Modifier
                 .padding(start = 55.dp, top = 200.dp)
@@ -379,7 +377,7 @@ fun Intro4Screen() {
 fun Intro5Screen() {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.bgintro),
+            painter = painterResource(id = R.drawable.bg),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -395,7 +393,7 @@ fun Intro5Screen() {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.bg1intro),
+            painter = painterResource(id = R.drawable.bg1),
             contentDescription = null,
             modifier = Modifier
                 .padding(start = 55.dp, top = 200.dp)

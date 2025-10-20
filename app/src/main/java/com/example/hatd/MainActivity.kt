@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(
                         navController = navController,
-                        startDestination = "gioithieu"
+                        startDestination = "intro"
                     ) {
                         composable("gioithieu") { GioiThieuScreen(navController) }
                         composable("intro") { IntroScreen() }
