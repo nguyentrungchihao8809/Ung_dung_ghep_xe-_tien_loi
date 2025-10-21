@@ -46,6 +46,8 @@ dependencies {
     // --- AndroidX & Compose cơ bản ---
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.35.2-beta")
     implementation("androidx.navigation:navigation-compose:2.8.3")
+    implementation ("androidx.compose.material3:material3:1.2.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

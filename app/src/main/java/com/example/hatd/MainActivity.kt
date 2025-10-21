@@ -47,15 +47,11 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(
                         navController = navController,
-                        startDestination = "singup"
+                        startDestination = "intro"
                     ) {
                         composable("gioithieu") { GioiThieuScreen(navController) }
                         composable("intro") { IntroScreen(navController) }
-
                         composable("singup") { SingupScreen(navController) }
-
-
-
                         composable("TaoYeuCauChuyenDi") {TaoYeuCauChuyenDiScreen() }
                         composable("DanhGiaDriver") {DanhGiaDriverScreen() }
 
