@@ -15,9 +15,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.hatd.ui.auth.gioithieu.GioiThieuScreen
 import com.example.hatd.ui.auth.intro.IntroScreen
+import com.example.hatd.ui.auth.singup.SingupScreen
 import com.example.hatd.ui.user.TaoYeuCauChuyenDiScreen.TaoYeuCauChuyenDiScreen
 import com.example.hatd.ui.user.DanhGiaDriverScreen.DanhGiaDriverScreen
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,10 +47,14 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(
                         navController = navController,
-                        startDestination = "intro"
+                        startDestination = "singup"
                     ) {
                         composable("gioithieu") { GioiThieuScreen(navController) }
-                        composable("intro") { IntroScreen() }
+                        composable("intro") { IntroScreen(navController) }
+
+                        composable("singup") { SingupScreen(navController) }
+
+
 
                         composable("TaoYeuCauChuyenDi") {TaoYeuCauChuyenDiScreen() }
                         composable("DanhGiaDriver") {DanhGiaDriverScreen() }
