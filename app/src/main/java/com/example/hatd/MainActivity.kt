@@ -17,7 +17,7 @@ import com.example.hatd.ui.auth.gioithieu.GioiThieuScreen
 import com.example.hatd.ui.auth.intro.IntroScreen
 import com.example.hatd.ui.auth.otp.OtpScreen //
 import com.example.hatd.ui.home.home_user.HomeUserScreen //
-import com.example.hatd.ui.home.hengio.HenGioScreen //
+import com.example.hatd.ui.user.HenGio.HenGioScreen //
 import com.example.hatd.ui.auth.singup.SingupScreen
 import com.example.hatd.ui.user.TaoYeuCauChuyenDiScreen.TaoYeuCauChuyenDiScreen
 import com.example.hatd.ui.user.DanhGiaDriver.DanhGiaDriverScreen //
