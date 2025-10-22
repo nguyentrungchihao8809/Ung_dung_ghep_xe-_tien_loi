@@ -15,6 +15,8 @@ thuyết minh tổng quan [Click here] (https://docs.google.com/document/d/1IkRM
 
 Lộ trình build [Click here] (https://docs.google.com/spreadsheets/d/1dlcb1i2_rcYkgeBhEyo8mzgSESSk6xhOCjy7GCRltBQ/edit?gid=0#gid=0)
 
+Meeting (https://meet.google.com/bbw-kvmh-mdo)
+
 1️⃣ Thiết kế Database (ERD + Table)
 2️⃣ Thiết kế Kiến trúc hệ thống
 3️⃣ Thiết kế API (nếu có backend)
