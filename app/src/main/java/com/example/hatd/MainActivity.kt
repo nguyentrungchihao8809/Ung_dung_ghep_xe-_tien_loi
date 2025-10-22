@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
                         composable("intro") { IntroScreen(navController) }
                         composable("singup") { SingupScreen(navController) }
                         composable("otp") { OtpScreen() }
-                        composable("hengio") { HenGioScreen() }
+                        composable("HenGio") { HenGioScreen() }
                         composable("home_user") { HomeUserScreen() }
                         composable("TaoYeuCauChuyenDi") {TaoYeuCauChuyenDiScreen() }
                         composable("DanhGiaDriver") {DanhGiaDriverScreen() }
