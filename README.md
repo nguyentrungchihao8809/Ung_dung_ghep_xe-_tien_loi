@@ -13,6 +13,7 @@ Database [Click here] (https://www.drawdb.app/editor?shareId=0792c477f3164bd686a
 
 thuyết minh tổng quan [Click here] (https://docs.google.com/document/d/1IkRMM6BVJ4MBDnO2L_NNLsFNiltFsx0G-StIR9ZzHmI/edit?usp=sharing)
 
+Lộ trình build [Click here] (https://docs.google.com/spreadsheets/d/1dlcb1i2_rcYkgeBhEyo8mzgSESSk6xhOCjy7GCRltBQ/edit?gid=0#gid=0)
 
 1️⃣ Thiết kế Database (ERD + Table)
 2️⃣ Thiết kế Kiến trúc hệ thống
