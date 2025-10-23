@@ -1,13 +1,11 @@
-package com.example.hatd.ui.user.LichSuChuyenDi
+package com.example.hatd.ui.user.ChiTietLichSuChuyenDi
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.clickable
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,27 +21,30 @@ import androidx.compose.ui.unit.sp
 import com.example.hatd.R
 
 @Composable
-fun LichSuChuyenDiScreen() {
+fun ChiTietLichSuChuyenDiScreen(onBackClick: () -> Unit = {}) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
             .padding(horizontal = 16.dp)
+            .padding(top = 28.dp)
     ) {
         // 🔹 Thanh tiêu đề
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp),
+                .padding(top = 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { /* Quay lại */ }) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color.Black
-                )
-            }
+            // ✅ Sửa phần này: thay IconButton bằng Image (ảnh nút quay lại)
+            Image(
+                painter = painterResource(id = R.drawable.back), // đổi tên nếu ảnh bạn khác
+                contentDescription = "Quay lại",
+                modifier = Modifier
+                    .size(28.dp)
+                    .clickable { onBackClick() }
+            )
+
             Text(
                 text = "Chi tiết chuyến đi",
                 fontSize = 20.sp,
@@ -64,7 +65,7 @@ fun LichSuChuyenDiScreen() {
             elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
         ) {
             Box {
-                //  Ảnh nền (background)
+                // Ảnh nền (background)
                 Image(
                     painter = painterResource(id = R.drawable.anhnensaudriver),
                     contentDescription = null,
@@ -81,7 +82,7 @@ fun LichSuChuyenDiScreen() {
                         .padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    //  Ảnh tài xế
+                    // Ảnh tài xế
                     Image(
                         painter = painterResource(id = R.drawable.anhdriver),
                         contentDescription = "Driver",
@@ -91,7 +92,7 @@ fun LichSuChuyenDiScreen() {
                         contentScale = ContentScale.Crop
                     )
 
-                    //  Thông tin bên trái
+                    // Thông tin bên trái
                     Column(modifier = Modifier.weight(1f)) {
                         Text("Hứa Anh Tới Đón", fontWeight = FontWeight.Bold, fontSize = 18.sp)
                         Spacer(Modifier.height(4.dp))
@@ -110,7 +111,7 @@ fun LichSuChuyenDiScreen() {
                         Text("EVO.HATD CYAN", fontSize = 13.sp, color = Color.Gray)
                     }
 
-                    //  Biển số và logo
+                    // Biển số và logo
                     Column(horizontalAlignment = Alignment.End) {
                         Text(
                             "59TA-113.15",
@@ -127,7 +128,7 @@ fun LichSuChuyenDiScreen() {
                             contentDescription = null,
                             modifier = Modifier
                                 .size(60.dp)
-                                .alpha(0.5f), //  logo mờ nhẹ hòa vào nền driver
+                                .alpha(0.5f), // logo mờ nhẹ hòa vào nền driver
                             contentScale = ContentScale.Crop
                         )
                     }
@@ -146,7 +147,7 @@ fun LichSuChuyenDiScreen() {
                 .background(Color.White)
         ) {
             Box {
-                //  Ảnh nền mờ phía sau phần chi tiết chuyến đi
+                // Ảnh nền mờ phía sau phần chi tiết chuyến đi
                 Image(
                     painter = painterResource(id = R.drawable.anhnenchitietchuyendi),
                     contentDescription = null,
@@ -162,7 +163,7 @@ fun LichSuChuyenDiScreen() {
                     Text("10/10/2025 • 7:00 CH", color = Color.Gray, fontSize = 14.sp)
                     Spacer(Modifier.height(12.dp))
 
-                    //  Điểm đón
+                    // Điểm đón
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             painter = painterResource(id = R.drawable.diemdon),
@@ -181,7 +182,7 @@ fun LichSuChuyenDiScreen() {
                         }
                     }
 
-                    //  ẢNH ĐƯỜNG NỐI GIỮA ĐIỂM ĐÓN VÀ ĐIỂM ĐẾN
+                    // Ảnh đường nối giữa điểm đón và điểm đến
                     Image(
                         painter = painterResource(id = R.drawable.duonggachnoi),
                         contentDescription = "Đường nối giữa điểm đón và điểm đến",
@@ -190,7 +191,7 @@ fun LichSuChuyenDiScreen() {
                             .height(40.dp)
                     )
 
-                    //  Điểm đến
+                    // Điểm đến
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             painter = painterResource(id = R.drawable.diemden),
@@ -211,7 +212,7 @@ fun LichSuChuyenDiScreen() {
 
                     Spacer(Modifier.height(12.dp))
 
-                    //  Tiền mặt
+                    // Tiền mặt
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             painter = painterResource(id = R.drawable.dola),
@@ -229,7 +230,7 @@ fun LichSuChuyenDiScreen() {
                     Text("Ghi chú", fontWeight = FontWeight.Bold)
                 }
 
-                //  Hình xe nhỏ góc dưới bên phải
+                // Hình xe nhỏ góc dưới bên phải
                 Image(
                     painter = painterResource(id = R.drawable.xegocduoiphai),
                     contentDescription = null,
@@ -239,7 +240,7 @@ fun LichSuChuyenDiScreen() {
                         .padding(end = 4.dp, bottom = 4.dp)
                 )
 
-                //  Hình xe nhỏ góc dưới bên trái
+                // Hình xe nhỏ góc dưới bên trái
                 Image(
                     painter = painterResource(id = R.drawable.xegocduoitrai),
                     contentDescription = null,
@@ -253,7 +254,7 @@ fun LichSuChuyenDiScreen() {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        //  Hai nút hành động dưới cùng
+        // Hai nút hành động dưới cùng
         Row(
             modifier = Modifier
                 .fillMaxWidth()
