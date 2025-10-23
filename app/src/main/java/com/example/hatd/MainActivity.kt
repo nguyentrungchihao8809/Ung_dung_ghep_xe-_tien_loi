@@ -23,6 +23,7 @@ import com.example.hatd.ui.user.TaoYeuCauChuyenDiScreen.TaoYeuCauChuyenDiScreen
 import com.example.hatd.ui.user.DanhGiaDriver.DanhGiaDriverScreen //
 import com.example.hatd.ui.user.ThanhToan.ThanhToanScreen //
 import com.example.hatd.ui.user.ChiTietLichSuChuyenDi.ChiTietLichSuChuyenDiScreen //
+import com.example.hatd.ui.user.ChiTietChuyenDi.ChiTietChuyenDiScreen
 import com.example.hatd.ui.user.XacNhanDiemDon.XacNhanDiemDonScreen //
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -65,6 +66,7 @@ class MainActivity : ComponentActivity() {
                         composable("DanhGiaDriver") {DanhGiaDriverScreen() }
                         composable("ThanhToan") {ThanhToanScreen() }
                         composable("ChiTietLichSuChuyenDi") {ChiTietLichSuChuyenDiScreen() }
+                        composable("ChiTietChuyenDi") {ChiTietChuyenDiScreen() }
                         composable("XacNhanDiemDon") {XacNhanDiemDonScreen() }
 
 
