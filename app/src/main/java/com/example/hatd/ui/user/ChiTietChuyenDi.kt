@@ -348,7 +348,7 @@ fun ChiTietChuyenDiScreen() {
 
                 //  Hình xe nhỏ góc dưới bên phải
                 Image(
-                    painter = painterResource(id = R.drawable.xegocphai),
+                    painter = painterResource(id = R.drawable.xegocduoiphai),
                     contentDescription = null,
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
