@@ -3,12 +3,11 @@ package com.example.hatd.ui.user.HoSoUser
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,23 +35,19 @@ fun HoSoUserScreen(
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // Nút quay lại
-        IconButton(
-            onClick = onBackClick,
+       
+        Image(
+            painter = painterResource(id = R.drawable.back), 
+            contentDescription = "Quay lại",
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .padding(top = 48.dp, start = 10.dp)
                 .size(40.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Quay lại",
-                tint = Color.Black,
-                modifier = Modifier.size(34.dp)
-            )
-        }
+                .clickable { onBackClick() },
+            contentScale = ContentScale.Fit
+        )
 
-        // Nội dung chính
+        // 🔹 Nội dung chính
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -63,7 +58,7 @@ fun HoSoUserScreen(
         ) {
             Spacer(modifier = Modifier.height(60.dp))
 
-            // KHUNG THÔNG TIN USER
+            // ===== KHUNG THÔNG TIN USER =====
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -78,16 +73,14 @@ fun HoSoUserScreen(
                         .height(120.dp)
                         .clip(RoundedCornerShape(16.dp))
                 ) {
-                    // Ảnh nền của khung user
                     Image(
                         painter = painterResource(id = R.drawable.anhnensauuser),
                         contentDescription = "Ảnh nền khung user",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.matchParentSize(),
-                        alpha = 0.4f // làm mờ ảnh nền
+                        alpha = 0.4f
                     )
 
-                    // Ảnh user + thông tin
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -132,14 +125,13 @@ fun HoSoUserScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // CHI TIẾT NGƯỜI DÙNG — viền nét đứt 
+            // ===== CHI TIẾT NGƯỜI DÙNG =====
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(16.dp))
                     .background(Color.White)
             ) {
-                // Nội dung trong khung
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -154,7 +146,7 @@ fun HoSoUserScreen(
                     ProfileRow(label = "Số điện thoại", value = "0375242005")
                 }
 
-                // Vẽ viền nét đứt thủ công
+                // Viền nét đứt
                 Box(
                     modifier = Modifier
                         .matchParentSize()
@@ -163,7 +155,6 @@ fun HoSoUserScreen(
                             val dash = 15.dp.toPx()
                             val gap = 10.dp.toPx()
 
-                            // top edge
                             var x = 0f
                             while (x < size.width) {
                                 val xEnd = (x + dash).coerceAtMost(size.width)
@@ -176,7 +167,6 @@ fun HoSoUserScreen(
                                 x += dash + gap
                             }
 
-                            // bottom edge
                             x = 0f
                             val yBottom = size.height
                             while (x < size.width) {
@@ -190,7 +180,6 @@ fun HoSoUserScreen(
                                 x += dash + gap
                             }
 
-                            // left edge
                             var y = 0f
                             while (y < size.height) {
                                 val yEnd = (y + dash).coerceAtMost(size.height)
@@ -203,7 +192,6 @@ fun HoSoUserScreen(
                                 y += dash + gap
                             }
 
-                            // right edge
                             y = 0f
                             val xRight = size.width
                             while (y < size.height) {
@@ -222,7 +210,7 @@ fun HoSoUserScreen(
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            //  HỘP CẢM ƠN
+            // ===== HỘP CẢM ƠN =====
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -253,7 +241,6 @@ fun HoSoUserScreen(
                     )
                 }
 
-                //  ảnh ở góc dưới
                 Image(
                     painter = painterResource(id = R.drawable.thatim),
                     contentDescription = null,
@@ -266,11 +253,11 @@ fun HoSoUserScreen(
 
             Spacer(modifier = Modifier.height(35.dp))
 
-            //  NÚT ĐĂNG XUẤT
+            // ===== NÚT ĐĂNG XUẤT =====
             TextButton(onClick = onLogoutClick) {
                 Text(
                     text = "Đăng xuất",
-                    fontSize = 22.sp, // chữ to hơn
+                    fontSize = 22.sp,
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
@@ -282,7 +269,6 @@ fun HoSoUserScreen(
     }
 }
 
-// DÒNG THÔNG TIN USER
 @Composable
 fun ProfileRow(label: String, value: String) {
     Column(modifier = Modifier.padding(vertical = 10.dp)) {
