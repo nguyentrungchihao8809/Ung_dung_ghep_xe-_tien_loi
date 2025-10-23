@@ -7,8 +7,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,8 +35,7 @@ fun ThanhToanScreen(
         Image(
             painter = painterResource(id = R.drawable.dongtien),
             contentDescription = "Ảnh nền thanh toán",
-            modifier = Modifier
-                .fillMaxSize(), // phủ toàn màn hình
+            modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
 
@@ -49,23 +46,21 @@ fun ThanhToanScreen(
         ) {
             Spacer(modifier = Modifier.height(40.dp))
 
-            // 🔙 Nút quay lại
-            IconButton(
-                onClick = onBackClick,
+            // Nút quay lại
+            Image(
+                painter = painterResource(id = R.drawable.back),
+                contentDescription = "Nút quay lại",
                 modifier = Modifier
                     .size(44.dp)
+                    .clip(CircleShape)
                     .background(Color.White.copy(alpha = 0.8f), CircleShape)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color.Black
-                )
-            }
+                    .clickable { onBackClick() },
+                contentScale = ContentScale.Fit
+            )
 
             Spacer(modifier = Modifier.height(220.dp))
 
-            // 🏷 Tiêu đề + gạch xanh
+            //  Tiêu đề + gạch xanh
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -89,7 +84,7 @@ fun ThanhToanScreen(
             Spacer(modifier = Modifier.height(24.dp))
             val iconSize = 48.dp
 
-            // 💵 Thanh toán tiền mặt
+            //  Thanh toán tiền mặt
             ThanhToanItem(
                 icon = R.drawable.dola,
                 text = "Thanh toán tiền mặt",
@@ -152,7 +147,7 @@ fun ThanhToanItem(
             .shadow(3.dp, RoundedCornerShape(20.dp))
             .border(1.dp, Color.Black, RoundedCornerShape(20.dp))
             .clip(RoundedCornerShape(20.dp))
-            .background(Color.White.copy(alpha = 0.9f)) // làm trong nhẹ để thấy nền
+            .background(Color.White.copy(alpha = 0.9f))
             .clickable { onClick() }
             .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically
