@@ -19,6 +19,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hatd.R
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 
 @Composable
 fun ChiTietLichSuChuyenDiScreen(onBackClick: () -> Unit = {}) {
@@ -33,18 +37,16 @@ fun ChiTietLichSuChuyenDiScreen(onBackClick: () -> Unit = {}) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 4.dp),
+                .padding(top = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-           
-            Image(
-                painter = painterResource(id = R.drawable.back),
-                contentDescription = "Quay lại",
-                modifier = Modifier
-                    .size(28.dp)
-                    .clickable { onBackClick() }
-            )
-
+            IconButton(onClick = { /* Quay lại */ }) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back",
+                    tint = Color.Black
+                )
+            }
             Text(
                 text = "Chi tiết chuyến đi",
                 fontSize = 20.sp,
@@ -55,84 +57,120 @@ fun ChiTietLichSuChuyenDiScreen(onBackClick: () -> Unit = {}) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 🔹 Thẻ thông tin tài xế
+        // 🔹 Thông tin tài xế
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(130.dp),
-            shape = RoundedCornerShape(20.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                .height(160.dp)
+                .padding(8.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+            shape = RoundedCornerShape(24.dp),
+            border = BorderStroke(1.dp, Color(0xFF0081F1)) // viền xanh dương
         ) {
-            Box {
-                // Ảnh nền (background)
+            Box(modifier = Modifier.fillMaxSize()) {
+
+                // Ảnh nền trong card tài xế
                 Image(
-                    painter = painterResource(id = R.drawable.anhnensaudriver),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(20.dp)),
-                    contentScale = ContentScale.Crop,
-                    alpha = 0.35f
+                    painter = painterResource(id = R.drawable.nenthongtindriver),
+                    contentDescription = "Background Driver",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
                 )
 
+                // Avatar, xe máy và tên tài xế
                 Row(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
+                        .align(Alignment.CenterStart)
+                        .padding(start = 12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Ảnh tài xế
-                    Image(
-                        painter = painterResource(id = R.drawable.anhdriver),
-                        contentDescription = "Driver",
-                        modifier = Modifier
-                            .size(70.dp)
-                            .padding(end = 12.dp),
-                        contentScale = ContentScale.Crop
-                    )
-
-                    // Thông tin bên trái
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text("Hứa Anh Tới Đón", fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                        Spacer(Modifier.height(4.dp))
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text("5.0", fontSize = 14.sp)
-                            Icon(
-                                painter = painterResource(id = R.drawable.ngoisao),
-                                contentDescription = "Star",
-                                tint = Color(0xFFFFD700),
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Box {
+                            // Avatar tài xế
+                            Image(
+                                painter = painterResource(id = R.drawable.avtdriver),
+                                contentDescription = "Ảnh tài xế",
                                 modifier = Modifier
-                                    .padding(start = 2.dp)
-                                    .size(16.dp)
+                                    .size(80.dp)
+                                    .offset(x = (-8).dp)
+                                    .background(Color.White, CircleShape)
+                                    .border(2.dp, Color(0xFF0081F1), CircleShape)
+                            )
+
+                            // Ảnh xe máy
+                            Image(
+                                painter = painterResource(id = R.drawable.xemay),
+                                contentDescription = "Xe máy",
+                                modifier = Modifier
+                                    .size(50.dp)
+                                    .align(Alignment.BottomEnd)
+                                    .offset(x = 6.dp, y = 6.dp)
                             )
                         }
-                        Spacer(Modifier.height(6.dp))
-                        Text("EVO.HATD CYAN", fontSize = 13.sp, color = Color.Gray)
-                    }
 
-                    // Biển số và logo
-                    Column(horizontalAlignment = Alignment.End) {
-                        Text(
-                            "59TA-113.15",
-                            color = Color(0xFF005BBB),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp,
-                            modifier = Modifier
-                                .border(1.dp, Color(0xFF005BBB), RoundedCornerShape(8.dp))
-                                .padding(horizontal = 8.dp, vertical = 2.dp)
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        Image(
-                            painter = painterResource(id = R.drawable.logo),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(60.dp)
-                                .alpha(0.5f), // logo mờ nhẹ hòa vào nền driver
-                            contentScale = ContentScale.Crop
-                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        // Tên tài xế và đánh giá sao
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(start = 8.dp)
+                        ) {
+                            Text(
+                                text = "Hứa Anh Tới Đón",
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 14.sp,
+                                color = Color(0xFF333333)
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text(
+                                text = "5.0⭐",
+                                color = Color.Black,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 14.sp
+                            )
+                        }
                     }
                 }
+
+                // Biển số xe, tên xe
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(top = 16.dp, end = 16.dp),
+                    horizontalAlignment = Alignment.End
+                ) {
+                    Surface(
+                        shape = RoundedCornerShape(12.dp),
+                        border = BorderStroke(1.dp, Color(0xFF0081F1)),
+                        color = Color(0xFFE3F2FD),
+                        modifier = Modifier.padding(4.dp)
+                    ) {
+                        Text(
+                            text = "59TA-113.15",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp,
+                            color = Color(0xFF0081F1),
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                        )
+                    }
+
+                    Text(
+                        text = "EVO.HATD CYAN",
+                        fontSize = 12.sp,
+                        color = Color(0xFF007ACC)
+                    )
+                }
+
+                // Logo góc dưới phải
+                Image(
+                    painter = painterResource(id = R.drawable.logo),
+                    contentDescription = "Logo HATD",
+                    modifier = Modifier
+                        .size(120.dp)
+                        .align(Alignment.BottomEnd)
+                        .offset(x = 10.dp, y = 30.dp)
+                        .padding(bottom = 8.dp, end = 16.dp)
+                )
             }
         }
 
@@ -215,7 +253,7 @@ fun ChiTietLichSuChuyenDiScreen(onBackClick: () -> Unit = {}) {
                     // Tiền mặt
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            painter = painterResource(id = R.drawable.dola),
+                            painter = painterResource(id = R.drawable.tien),
                             contentDescription = null,
                             tint = Color(0xFF4CAF50),
                             modifier = Modifier.size(20.dp)
