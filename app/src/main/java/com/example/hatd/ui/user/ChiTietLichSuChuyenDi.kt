@@ -36,9 +36,9 @@ fun ChiTietLichSuChuyenDiScreen(onBackClick: () -> Unit = {}) {
                 .padding(top = 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // ✅ Sửa phần này: thay IconButton bằng Image (ảnh nút quay lại)
+           
             Image(
-                painter = painterResource(id = R.drawable.back), // đổi tên nếu ảnh bạn khác
+                painter = painterResource(id = R.drawable.back),
                 contentDescription = "Quay lại",
                 modifier = Modifier
                     .size(28.dp)
