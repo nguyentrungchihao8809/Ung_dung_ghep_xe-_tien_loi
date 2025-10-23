@@ -2,21 +2,21 @@ package com.example.hatd.ui.user.ThongBao
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.draw.clip
 import com.example.hatd.R
 
 @Composable
@@ -26,19 +26,19 @@ fun ThongBaoScreen(onBackClick: () -> Unit = {}) {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // 🔙 Nút quay lại
-        IconButton(
-            onClick = onBackClick,
+        //  Nút quay lại
+        Image(
+            painter = painterResource(id = R.drawable.back),
+            contentDescription = "Quay lại",
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .padding(top = 20.dp, start = 8.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Quay lại",
-                tint = Color.Black
-            )
-        }
+                .size(40.dp) // kích thước nút back
+                .clip(CircleShape)
+                .background(Color.White.copy(alpha = 0.8f)) // nền mờ nhẹ
+                .clickable { onBackClick() },
+            contentScale = ContentScale.Fit
+        )
 
         // 🔹 Tiêu đề
         Text(
