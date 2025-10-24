@@ -25,6 +25,7 @@ import com.example.hatd.ui.user.ThanhToan.ThanhToanScreen //
 import com.example.hatd.ui.user.ChiTietLichSuChuyenDi.ChiTietLichSuChuyenDiScreen //
 import com.example.hatd.ui.user.ChiTietChuyenDi.ChiTietChuyenDiScreen
 import com.example.hatd.ui.user.XacNhanDiemDon.XacNhanDiemDonScreen //
+import com.example.hatd.ui.user.TheoDoiLoTrinh.TheoDoiLoTrinhScreen
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
@@ -68,6 +69,7 @@ class MainActivity : ComponentActivity() {
                         composable("ChiTietLichSuChuyenDi") {ChiTietLichSuChuyenDiScreen() }
                         composable("ChiTietChuyenDi") {ChiTietChuyenDiScreen() }
                         composable("XacNhanDiemDon") {XacNhanDiemDonScreen() }
+                        composable("TheoDoiLoTrinh") {TheoDoiLoTrinhScreen() }
 
 
 
