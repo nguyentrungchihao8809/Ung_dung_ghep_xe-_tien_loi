@@ -30,6 +30,7 @@ import com.example.hatd.ui.user.Call.CallScreen
 import com.example.hatd.ui.user.HoSoUser.HoSoUserScreen
 import com.example.hatd.ui.user.ThongBao.ThongBaoScreen
 import com.example.hatd.ui.user.GhiChu.GhiChuScreen 
+import com.example.hatd.ui.user.LichSuChuyenDi.LichSuChuyenDiScreen 
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
@@ -79,6 +80,8 @@ class MainActivity : ComponentActivity() {
                         composable("HoSoUser") {HoSoUserScreen() }
                         composable("ThongBao") {ThongBaoScreen() }
                         composable("GhiChu") { GhiChuScreen(navController) }
+                        composable("LichSuChuyenDi") { LichSuChuyenDiScreen() }
+
 
 
                     }
