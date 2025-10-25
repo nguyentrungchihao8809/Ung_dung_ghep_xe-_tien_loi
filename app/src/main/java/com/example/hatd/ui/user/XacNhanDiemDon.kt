@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,134 +22,136 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.navigation.NavController
 import com.example.hatd.R // Import tài nguyên hình ảnh từ thư mục res
 
-@Composable // Đánh dấu đây là một hàm Composable (dùng để tạo UI trong Compose)
-fun XacNhanDiemDonScreen(navController: NavController) { // Hàm chính hiển thị màn hình xác nhận điểm đón
-    Box( // Dùng Box để chồng nhiều phần tử UI lên nhau (z-index)
-        modifier = Modifier.fillMaxSize() // Chiếm toàn bộ kích thước màn hình
+@Composable
+fun XacNhanDiemDonScreen(navController: NavController) {
+    Box(
+        modifier = Modifier.fillMaxSize()
     ) {
         // Nút Back ở góc trái trên màn hình
         Image(
-            painter = painterResource(id = R.drawable.backicon), // Ảnh icon "back"
-            contentDescription = "Quay lại", // Mô tả ảnh (cho trợ năng)
+            painter = painterResource(id = R.drawable.backicon),
+            contentDescription = "Quay lại",
             modifier = Modifier
-                .offset(x = 20.dp, y = 55.dp) // Dịch vị trí xuống dưới một chút
-                .size(40.dp) // Kích thước icon là 40x40dp
+                .offset(x = 20.dp, y = 55.dp)
+                .size(40.dp)
         )
 
-        // Tạo Bottom Sheet (khung trắng có góc bo tròn ở dưới cùng)
+        // Tạo Bottom Sheet
         Box(
             modifier = Modifier
-                .fillMaxWidth() // Chiều ngang phủ toàn bộ màn hình
-                .align(Alignment.BottomCenter) // Căn ở phía dưới giữa màn hình
-                .graphicsLayer { // Tùy chỉnh hiệu ứng hiển thị của layer
-                    shadowElevation = 16f // Đổ bóng nhẹ cho khung
-                    shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp) // Bo tròn góc trên
-                    clip = true // Cắt theo viền bo tròn
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .graphicsLayer {
+                    shadowElevation = 16f
+                    shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
+                    clip = true
                 }
-                .background( // Đặt màu nền trắng cho khung
+                .background(
                     color = Color.White,
                     shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
                 )
         ) {
-            // Ảnh nền cho phần Bottom Sheet (hiển thị phía sau)
+            // Ảnh nền cho phần Bottom Sheet
             Image(
-                painter = painterResource(id = R.drawable.xacnhan), // Ảnh minh họa nền
-                contentDescription = "Điểm đón", // Mô tả ảnh
+                painter = painterResource(id = R.drawable.xacnhan),
+                contentDescription = "Điểm đón",
                 modifier = Modifier
-                    .fillMaxWidth() // Phủ toàn bộ chiều ngang
-                    .height(300.dp) // Chiều cao là 300dp
-                    .align(Alignment.TopCenter), // Căn giữa theo trục ngang, nằm trên
-                contentScale = ContentScale.Crop // Cắt và phóng ảnh sao cho vừa khung
+                    .fillMaxWidth()
+                    .height(300.dp)
+                    .align(Alignment.TopCenter),
+                contentScale = ContentScale.Crop
             )
 
-            // Phần nội dung text + button hiển thị đè lên ảnh nền
+            // Phần nội dung text + button
             Column(
                 modifier = Modifier
-                    .fillMaxWidth() // Chiều ngang full
-                    .padding(24.dp), // Cách lề trong 24dp
-                horizontalAlignment = Alignment.Start // Căn lề trái
+                    .fillMaxWidth()
+                    .padding(24.dp),
+                horizontalAlignment = Alignment.Start
             ) {
                 // Box chứa tiêu đề và địa chỉ điểm đón
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth() // Chiều ngang phủ hết
-                        .clip(RoundedCornerShape(12.dp)) // Bo tròn các góc
-                        .background( // Nền trắng cho box
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(
                             color = Color.White,
                             shape = RoundedCornerShape(12.dp)
                         )
                 ) {
                     // Ảnh nền cho box nhỏ bên trong
                     Image(
-                        painter = painterResource(id = R.drawable.bxacnhan), // Ảnh nền trang trí
-                        contentDescription = "Nền box", // Mô tả ảnh
+                        painter = painterResource(id = R.drawable.bxacnhan),
+                        contentDescription = "Nền box",
                         modifier = Modifier
-                            .fillMaxWidth() // Chiều ngang full
-                            .height(90.dp), // Giảm chiều cao để box gọn hơn
-                        contentScale = ContentScale.Crop // Cắt và phóng ảnh phù hợp khung
+                            .fillMaxWidth()
+                            .height(90.dp),
+                        contentScale = ContentScale.Crop
                     )
 
-                    // Nội dung chữ nằm đè lên ảnh nền
+                    // Nội dung chữ
                     Column(
-                        modifier = Modifier.padding(16.dp) // Cách lề trong 16dp
+                        modifier = Modifier.padding(16.dp)
                     ) {
-                        // Dòng tiêu đề “Điểm đón”
                         Text(
-                            text = "Điểm đón", // Nội dung chữ
-                            fontSize = 18.sp, // Kích thước chữ
-                            fontWeight = FontWeight.Bold, // Chữ đậm
-                            color = Color(0xFF000000), // Màu đen
-                            modifier = Modifier.fillMaxWidth() // Chiều ngang full
+                            text = "Điểm đón",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF000000),
+                            modifier = Modifier.fillMaxWidth()
                         )
 
-                        Spacer(modifier = Modifier.height(8.dp)) // Tạo khoảng cách 8dp giữa 2 dòng
+                        Spacer(modifier = Modifier.height(8.dp))
 
-                        // Dòng địa chỉ điểm đón
                         Text(
-                            text = "Đại học Giao Thông Vận Tải TP. Hồ Chí Minh", // Địa chỉ
-                            fontSize = 14.sp, // Cỡ chữ nhỏ hơn
-                            fontWeight = FontWeight.Normal, // Chữ thường
-                            color = Color(0xFF333333), // Màu xám đậm
-                            lineHeight = 22.sp, // Khoảng cách giữa các dòng
-                            modifier = Modifier.fillMaxWidth() // Chiều ngang full
+                            text = "Đại học Giao Thông Vận Tải TP. Hồ Chí Minh",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = Color(0xFF333333),
+                            lineHeight = 22.sp,
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
                 }
 
-                Spacer(modifier = Modifier.height(12.dp)) // Khoảng cách giữa box và dòng chữ dưới
+                Spacer(modifier = Modifier.height(12.dp))
 
-                // Dòng chữ “Thêm chi tiết” (người dùng có thể bấm vào)
+                // Dòng chữ "Thêm chi tiết" - Xóa hiệu ứng xám
                 Text(
-                    text = "Thêm chi tiết", // Nội dung chữ
-                    fontSize = 13.sp, // Cỡ chữ nhỏ
-                    fontWeight = FontWeight.Normal, // Chữ thường
-                    color = Color(0xFF3085E0), // Màu xanh dương
+                    text = "Thêm chi tiết",
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color(0xFF3085E0),
                     modifier = Modifier
-                        .fillMaxWidth() // Chiều ngang full
-                        .offset(y = 50.dp) // Dịch xuống một chút cho dễ nhìn
-                        .clickable { /* Xử lý khi người dùng bấm vào (ví dụ: mở nhập ghi chú) */ }
+                        .fillMaxWidth()
+                        .offset(y = 50.dp)
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
+                        ) {
+                            navController.navigate("GhiChu")
+                        }
                 )
 
-                Spacer(modifier = Modifier.height(24.dp)) // Khoảng cách trước nút
+                Spacer(modifier = Modifier.height(24.dp))
 
-                // Nút “Xác nhận điểm đón”
+                // Nút "Xác nhận điểm đón"
                 Button(
                     onClick = { navController.navigate("XacNhanDatXe") },
                     modifier = Modifier
-                        .fillMaxWidth() // Chiều ngang full
-                        .offset(y = 40.dp) // Dịch nút xuống một chút
-                        .height(56.dp), // Chiều cao của nút
+                        .fillMaxWidth()
+                        .offset(y = 40.dp)
+                        .height(56.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF5C9BE3)
                     ),
-                    shape = RoundedCornerShape(10.dp) // Bo tròn nhẹ các góc nút
+                    shape = RoundedCornerShape(10.dp)
                 ) {
-                    // Nội dung chữ trên nút
                     Text(
-                        text = "Xác nhận điểm đón", // Chữ hiển thị
-                        fontSize = 16.sp, // Kích thước chữ
-                        fontWeight = FontWeight.SemiBold, // Chữ đậm vừa
-                        color = Color.White // Màu chữ trắng
+                        text = "Xác nhận điểm đón",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.White
                     )
                 }
             }
