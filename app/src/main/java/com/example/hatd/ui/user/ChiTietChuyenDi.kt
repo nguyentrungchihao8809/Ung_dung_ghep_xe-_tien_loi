@@ -8,7 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,11 +22,18 @@ import com.example.hatd.R
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.ui.draw.shadow
-
+import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavController
 
 
 @Composable
-fun ChiTietChuyenDiScreen() {
+fun ChiTietChuyenDiScreen(navController: NavController? = null) {
+    // trạng thái dialog
+    var showLyDoHuy by remember { mutableStateOf(false) }
+    var showXacNhanHuy by remember { mutableStateOf(false) }
+    var showHoanTatHuy by remember { mutableStateOf(false) }
+    var lyDoChon by remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -245,7 +252,7 @@ fun ChiTietChuyenDiScreen() {
             Box {
                 //  Ảnh nền mờ phía sau phần chi tiết chuyến đi
                 Image(
-                    painter = painterResource(id = R.drawable.nenchitietchuyendi),
+                    painter = painterResource(id = R.drawable.anhnenchitietchuyendi),
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -373,7 +380,10 @@ fun ChiTietChuyenDiScreen() {
         // 🔹 Nút hủy chuyến
         Spacer(modifier = Modifier.height(20.dp))
         Button(
-            onClick = { /* TODO: hủy chuyến xe */ },
+            onClick = {
+                // bật dialog chọn lý do hủy — giữ nguyên vị trí nút / màu / style
+                showLyDoHuy = true
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
@@ -382,6 +392,219 @@ fun ChiTietChuyenDiScreen() {
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4ABDE0))
         ) {
             Text("Hủy chuyến xe", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+        }
+    }
+
+    // ===== Dialogs: Hiển thị chồng lên giao diện gốc (mờ nền), bo tròn, trắng =====
+
+    if (showLyDoHuy) {
+        HopThoaiLyDoHuy(
+            onChon = { lyDo ->
+                lyDoChon = lyDo
+                showLyDoHuy = false
+                // chuyển sang dialog xác nhận
+                showXacNhanHuy = true
+            },
+            onHuy = {
+                showLyDoHuy = false
+            }
+        )
+    }
+
+    if (showXacNhanHuy) {
+        HopThoaiXacNhanHuy(
+            lyDo = lyDoChon,
+            onXacNhan = {
+                // TODO: gọi API hủy ở đây nếu cần
+                showXacNhanHuy = false
+                showHoanTatHuy = true
+            },
+            onQuayLai = {
+                showXacNhanHuy = false
+                showLyDoHuy = true
+            }
+        )
+    }
+
+    if (showHoanTatHuy) {
+        HopThoaiHoanTatHuy(
+            onDatLai = {
+                showHoanTatHuy = false
+                // điều hướng về "TaoYeuCauChuyenDi" nếu NavController được truyền
+                navController?.navigate("TaoYeuCauChuyenDi")
+            },
+            onDong = {
+                showHoanTatHuy = false
+            }
+        )
+    }
+}
+
+/**
+ * Dialog: HopThoaiLyDoHuy
+ * Dạng popup chính giữa, nền dim tự động do Dialog
+ */
+@Composable
+fun HopThoaiLyDoHuy(onChon: (String) -> Unit, onHuy: () -> Unit) {
+    Dialog(onDismissRequest = onHuy) {
+        Card(
+            shape = RoundedCornerShape(20.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(text = "Tại sao bạn lại hủy bỏ?", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(text = "Hãy cho HATD biết chuyện gì xảy ra.", color = Color.Gray, fontSize = 14.sp)
+                Spacer(modifier = Modifier.height(12.dp))
+
+                val danhSach = listOf(
+                    "Thay đổi phương thức thanh toán",
+                    "Tôi muốn thay đổi địa điểm",
+                    "Các vấn đề ưu đãi",
+                    "Tài xế ở quá xa"
+                )
+
+                danhSach.forEach { lyDo ->
+                    OutlinedButton(
+                        onClick = { onChon(lyDo) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 6.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        border = BorderStroke(1.dp, Color(0xFF4ABDE0)),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            containerColor = Color(0xFFE8F6FC),
+                            contentColor = Color.Black
+                        )
+                    ) {
+                        Text(text = lyDo)
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                    TextButton(onClick = onHuy) {
+                        Text("Đóng")
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Dialog: HopThoaiXacNhanHuy
+ */
+@Composable
+fun HopThoaiXacNhanHuy(lyDo: String, onXacNhan: () -> Unit, onQuayLai: () -> Unit) {
+    Dialog(onDismissRequest = onQuayLai) {
+        Card(
+            shape = RoundedCornerShape(20.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // dùng ảnh avtdriver làm biểu tượng; nếu bạn có ảnh khác, thay vào R.drawable.*
+                Image(
+                    painter = painterResource(id = R.drawable.avtdriver),
+                    contentDescription = "Icon xác nhận",
+                    modifier = Modifier
+                        .size(100.dp)
+                        .padding(8.dp)
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(text = "Bạn có chắc muốn hủy chuyến?", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(text = "Lý do: $lyDo", color = Color.Gray, fontSize = 14.sp)
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Button(
+                    onClick = onXacNhan,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4ABDE0)),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text("Xác nhận hủy", color = Color.White)
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedButton(
+                    onClick = onQuayLai,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(44.dp),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text("Quay lại")
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Dialog: HopThoaiHoanTatHuy
+ * Hiển thị thông báo hoàn tất và dòng "Vui lòng đặt lại" dẫn về route "TaoYeuCauChuyenDi"
+ */
+@Composable
+fun HopThoaiHoanTatHuy(onDatLai: () -> Unit, onDong: () -> Unit) {
+    Dialog(onDismissRequest = onDong) {
+        Card(
+            shape = RoundedCornerShape(20.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // ảnh hoàn tất (dùng logo làm ví dụ)
+                Image(
+                    painter = painterResource(id = R.drawable.logo),
+                    contentDescription = "Hoàn tất",
+                    modifier = Modifier.size(100.dp)
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Text(
+                    text = "Lần sau vẫn đồng hành cùng HATD nhé!",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    color = Color.Black
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                TextButton(onClick = onDatLai) {
+                    Text(
+                        text = "Vui lòng đặt lại",
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF4ABDE0)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                TextButton(onClick = onDong) {
+                    Text("Đóng")
+                }
+            }
         }
     }
 }
