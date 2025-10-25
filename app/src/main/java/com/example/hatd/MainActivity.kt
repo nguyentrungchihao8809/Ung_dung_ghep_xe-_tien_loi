@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
                         composable("DanhGiaDriver") {DanhGiaDriverScreen() }
                         composable("ThanhToan") {ThanhToanScreen() }
                         composable("ChiTietLichSuChuyenDi") {ChiTietLichSuChuyenDiScreen() }
-                        composable("ChiTietChuyenDi") {ChiTietChuyenDiScreen() }
+                        composable("ChiTietChuyenDi") {ChiTietChuyenDiScreen(navController) }
                         composable("XacNhanDiemDon") {XacNhanDiemDonScreen(navController) }
                         composable("XacNhanDatXe") {XacNhanDatXeScreen(navController) }
                         composable("TheoDoiLoTrinh") {TheoDoiLoTrinhScreen() }
