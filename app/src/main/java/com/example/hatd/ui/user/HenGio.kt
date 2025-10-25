@@ -24,13 +24,14 @@ import androidx.compose.ui.text.style.TextAlign // Căn chỉnh chữ
 import androidx.compose.ui.unit.Dp // Đơn vị chiều dài DP
 import androidx.compose.ui.unit.dp // DP
 import androidx.compose.ui.unit.sp // SP
+import androidx.navigation.NavController
 import com.example.hatd.R // Resource file
 import java.text.SimpleDateFormat // Định dạng ngày giờ
 import java.util.* // Calendar, Date
 import kotlinx.coroutines.launch // Coroutine để chạy async
 
 @Composable
-fun HenGioScreen() { // Hàm chính hiển thị màn hình hẹn giờ
+fun HenGioScreen(navController: NavController) { // Hàm chính hiển thị màn hình hẹn giờ
     // State lưu vị trí/giờ/phút người dùng chọn
     var ViTriNgayDaChon by remember { mutableStateOf(0) } // Chỉ số ngày được chọn
     var GioDaChon by remember { mutableStateOf("00") } // Giờ được chọn
@@ -109,26 +110,31 @@ fun HenGioScreen() { // Hàm chính hiển thị màn hình hẹn giờ
         modifier = Modifier
             .fillMaxSize() // Chiếm full màn hình
             .background(Color(0xFFF5F5F5)) // Nền xám nhẹ
-            .padding(16.dp) // Padding chung
     ) {
-        // Icon quay lại
-        Icon(
-            painter = painterResource(id = R.drawable.close),
-            contentDescription = "Quay lai",
+        // Nút Back ở góc trái trên
+        Image(
+            painter = painterResource(id = R.drawable.backicon),
+            contentDescription = "Quay lại",
             modifier = Modifier
-                .offset(y = 27.dp) // Dịch chuyển xuống
-                .size(35.dp) // Kích thước icon
-                .clickable { /* Quay lai */ },
-            tint = Color.Black // Màu icon
+                .align(Alignment.TopStart)
+                .offset(x = 24.dp, y = 40.dp)
+                .size(40.dp)
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ) {
+                    navController.navigate("XacNhanDatXe")
+                }
         )
 
         // Box chính chứa nội dung hẹn giờ
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight()
-                .align(Alignment.TopCenter)
-                .offset(y = 60.dp) // Dịch xuống
+                .fillMaxHeight(0.9f)
+                .align(Alignment.BottomCenter)
+                .padding(horizontal = 16.dp)
+                .offset(y = (-16).dp) // Dịch lên một chút
                 .VienChamCham(3.dp, Color(0xFF00BCD4), 24.dp) // Viền chấm
                 .background(Color.White, RoundedCornerShape(24.dp)) // Nền trắng bo góc
                 .padding(20.dp) // Padding nội dung
