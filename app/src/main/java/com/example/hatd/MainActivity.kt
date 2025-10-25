@@ -15,17 +15,20 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.hatd.ui.auth.gioithieu.GioiThieuScreen
 import com.example.hatd.ui.auth.intro.IntroScreen
-import com.example.hatd.ui.auth.otp.OtpScreen //
-import com.example.hatd.ui.home.home_user.HomeUserScreen //
-import com.example.hatd.ui.user.HenGio.HenGioScreen //
+import com.example.hatd.ui.auth.otp.OtpScreen 
+import com.example.hatd.ui.home.home_user.HomeUserScreen 
+import com.example.hatd.ui.user.HenGio.HenGioScreen 
 import com.example.hatd.ui.auth.singup.SingupScreen
 import com.example.hatd.ui.user.TaoYeuCauChuyenDiScreen.TaoYeuCauChuyenDiScreen
-import com.example.hatd.ui.user.DanhGiaDriver.DanhGiaDriverScreen //
-import com.example.hatd.ui.user.ThanhToan.ThanhToanScreen //
-import com.example.hatd.ui.user.ChiTietLichSuChuyenDi.ChiTietLichSuChuyenDiScreen //
+import com.example.hatd.ui.user.DanhGiaDriver.DanhGiaDriverScreen 
+import com.example.hatd.ui.user.ThanhToan.ThanhToanScreen 
+import com.example.hatd.ui.user.ChiTietLichSuChuyenDi.ChiTietLichSuChuyenDiScreen 
 import com.example.hatd.ui.user.ChiTietChuyenDi.ChiTietChuyenDiScreen
-import com.example.hatd.ui.user.XacNhanDiemDon.XacNhanDiemDonScreen //
+import com.example.hatd.ui.user.XacNhanDiemDon.XacNhanDiemDonScreen 
 import com.example.hatd.ui.user.TheoDoiLoTrinh.TheoDoiLoTrinhScreen
+import com.example.hatd.ui.user.Call.CallScreen
+import com.example.hatd.ui.user.HoSoUser.HoSoUserScreen
+import com.example.hatd.ui.user.ThongBao.ThongBaoScreen
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
@@ -61,17 +64,19 @@ class MainActivity : ComponentActivity() {
                         composable("intro") { IntroScreen(navController) }
                         composable("singup") { SingupScreen(navController) }
                         composable("otp") { OtpScreen() }
-                        composable("HenGio") { HenGioScreen() }
+                        composable("HenGio") { HenGioScreen(navController) }
                         composable("home_user") { HomeUserScreen() }
                         composable("TaoYeuCauChuyenDi") {TaoYeuCauChuyenDiScreen() }
                         composable("DanhGiaDriver") {DanhGiaDriverScreen() }
                         composable("ThanhToan") {ThanhToanScreen() }
                         composable("ChiTietLichSuChuyenDi") {ChiTietLichSuChuyenDiScreen() }
                         composable("ChiTietChuyenDi") {ChiTietChuyenDiScreen() }
-                        composable("XacNhanDiemDon") {XacNhanDiemDonScreen() }
+                        composable("XacNhanDiemDon") {XacNhanDiemDonScreen(navController) }
+                        composable("XacNhanDatXe") {XacNhanDatXeScreen(navController) }
                         composable("TheoDoiLoTrinh") {TheoDoiLoTrinhScreen() }
-
-
+                        composable("Call") {CallScreen() }
+                        composable("HoSoUser") {HoSoUserScreen() }
+                        composable("ThongBao") {ThongBaoScreen() }
 
                     }
                 }
