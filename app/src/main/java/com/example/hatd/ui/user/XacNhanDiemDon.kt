@@ -18,16 +18,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.navigation.NavController
 import com.example.hatd.R // Import tài nguyên hình ảnh từ thư mục res
 
 @Composable // Đánh dấu đây là một hàm Composable (dùng để tạo UI trong Compose)
-fun XacNhanDiemDonScreen() { // Hàm chính hiển thị màn hình xác nhận điểm đón
+fun XacNhanDiemDonScreen(navController: NavController) { // Hàm chính hiển thị màn hình xác nhận điểm đón
     Box( // Dùng Box để chồng nhiều phần tử UI lên nhau (z-index)
         modifier = Modifier.fillMaxSize() // Chiếm toàn bộ kích thước màn hình
     ) {
         // Nút Back ở góc trái trên màn hình
         Image(
-            painter = painterResource(id = R.drawable.back), // Ảnh icon "back"
+            painter = painterResource(id = R.drawable.backicon), // Ảnh icon "back"
             contentDescription = "Quay lại", // Mô tả ảnh (cho trợ năng)
             modifier = Modifier
                 .offset(x = 20.dp, y = 55.dp) // Dịch vị trí xuống dưới một chút
@@ -132,7 +133,7 @@ fun XacNhanDiemDonScreen() { // Hàm chính hiển thị màn hình xác nhận 
 
                 // Nút “Xác nhận điểm đón”
                 Button(
-                    onClick = { /* Xử lý khi bấm nút xác nhận điểm đón */ },
+                    onClick = { navController.navigate("XacNhanDatXe") },
                     modifier = Modifier
                         .fillMaxWidth() // Chiều ngang full
                         .offset(y = 40.dp) // Dịch nút xuống một chút
