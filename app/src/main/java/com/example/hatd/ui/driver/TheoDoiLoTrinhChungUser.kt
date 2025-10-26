@@ -76,7 +76,7 @@ fun TheoDoiLoTrinhChungUserScreen() {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // 🔸 Card thông tin tài xế
+            // 🔸 Card thông tin useruser
           UserInfoCard()
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -91,7 +91,7 @@ fun TheoDoiLoTrinhChungUserScreen() {
             ) {
                 // 🔸 Nút Chat
                 OutlinedButton(
-                    onClick = { /* TODO: Chat với tài xế */ },
+                    onClick = { /* TODO: Chat với user */ },
                     shape = RoundedCornerShape(50),
                     border = BorderStroke(1.dp, Color.Black),
                     colors = ButtonDefaults.outlinedButtonColors(
@@ -115,7 +115,7 @@ fun TheoDoiLoTrinhChungUserScreen() {
 
                 // 🔸 Nút gọi
                 IconButton(
-                    onClick = { /* TODO: Gọi tài xế */ },
+                    onClick = { /* TODO: Gọi useruser */ },
                     modifier = Modifier
                         .size(55.dp)
                         .padding(start = 6.dp)
@@ -150,7 +150,7 @@ fun UserInfoCard() {
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
 
-            // Ảnh nền trong card tài xế
+            // Ảnh nền trong card useruser
             Image(
                 painter = painterResource(id = R.drawable.nenuser),
                 contentDescription = "Background Driver",
@@ -223,6 +223,7 @@ fun UserInfoCard() {
         }
     }
 }
+
 
 
 
