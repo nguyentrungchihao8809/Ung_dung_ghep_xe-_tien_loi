@@ -35,6 +35,7 @@ import com.example.hatd.ui.driver.CallDriver
 import com.example.hatd.ui.driver.HoSoDriver.HoSoDriverScreen
 import com.example.hatd.ui.driver.TaoChuyenDi.TaoChuyenDiScreen
 import com.example.hatd.ui.driver.XacNhanGhep.XacNhanGhepScreen
+import com.example.hatd.ui.driver.TheoDoiLoTrinhChungUser.TheoDoiLoTrinhChungUserScreen
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
@@ -89,6 +90,7 @@ class MainActivity : ComponentActivity() {
                          composable("HoSoDriver") {HoSoDriverScreen(navController) }
                          composable("TaoChuyenDi") {TaoChuyenDiScreen() }
                          composable("XacNhanGhep") {XacNhanGhepScreen() }
+                           composable("TheoDoiLoTrinhChungUser") { TheoDoiLoTrinhChungUserScreen() }
 
 
 
