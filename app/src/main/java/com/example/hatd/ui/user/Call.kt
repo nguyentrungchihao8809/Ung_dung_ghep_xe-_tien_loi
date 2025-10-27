@@ -61,7 +61,7 @@ fun CallScreen(onBackClick: () -> Unit = {}) {
 
             // Tên tài xế
             Text(
-                text = "Driver",
+                text = "User",
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
