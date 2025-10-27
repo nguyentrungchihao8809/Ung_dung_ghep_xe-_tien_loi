@@ -37,7 +37,9 @@ import com.example.hatd.ui.driver.TaoChuyenDi.TaoChuyenDiScreen
 import com.example.hatd.ui.driver.XacNhanGhep.XacNhanGhepScreen
 import com.example.hatd.ui.driver.TheoDoiLoTrinhChungUser.TheoDoiLoTrinhChungUserScreen
 import com.example.hatd.ui.driver.XacNhanHoanThanh.XacNhanHoanThanhScreen
+import com.example.hatd.ui.user.Chat.ChatScreen
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+
 
 
 class MainActivity : ComponentActivity() {
@@ -93,6 +95,7 @@ class MainActivity : ComponentActivity() {
                          composable("XacNhanGhep") {XacNhanGhepScreen() }
                          composable("TheoDoiLoTrinhChungUser") { TheoDoiLoTrinhChungUserScreen() }
                          composable("XacNhanHoanThanh") { XacNhanHoanThanhScreen() }
+                         composable("Chat") {ChatScreen(navController) }
 
 
 
