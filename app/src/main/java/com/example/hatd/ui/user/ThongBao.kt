@@ -15,12 +15,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NavController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hatd.R
 
 @Composable
-fun ThongBaoScreen(onBackClick: () -> Unit = {}) {
+fun ThongBaoScreen(
+    navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -28,15 +30,16 @@ fun ThongBaoScreen(onBackClick: () -> Unit = {}) {
     ) {
         //  Nút quay lại
         Image(
-            painter = painterResource(id = R.drawable.back),
+            painter = painterResource(id = R.drawable.backicon),
             contentDescription = "Quay lại",
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .padding(top = 20.dp, start = 8.dp)
+                .padding(top = 40.dp, start = 12.dp)
                 .size(40.dp) // kích thước nút back
                 .clip(CircleShape)
                 .background(Color.White.copy(alpha = 0.8f)) // nền mờ nhẹ
-                .clickable { onBackClick() },
+                .clickable {
+                    navController.navigateUp(/*-------------*/)  },
             contentScale = ContentScale.Fit
         )
 
