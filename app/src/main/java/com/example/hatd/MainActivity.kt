@@ -39,6 +39,9 @@ import com.example.hatd.ui.driver.TheoDoiLoTrinhChungUser.TheoDoiLoTrinhChungUse
 import com.example.hatd.ui.driver.XacNhanHoanThanh.XacNhanHoanThanhScreen
 import com.example.hatd.ui.user.Chat.ChatScreen
 import com.example.hatd.ui.driver.ChatDriver.ChatDriverScreen
+import com.example.hatd.ui.home.HomeDriver.HomeDriverScreen //
+import com.example.hatd.ui.user.HoSoUser.HoSoUserScreen
+import com.example.hatd.ui.user.ThongBao.ThongBaoScreen
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
@@ -91,13 +94,16 @@ class MainActivity : ComponentActivity() {
                         composable("GhiChu") { GhiChuScreen(navController) }
                         composable("LichSuChuyenDi") { LichSuChuyenDiScreen() }
                         composable("CallDriver") {CallDriverScreen() }
-                         composable("HoSoDriver") {HoSoDriverScreen(navController) }
-                         composable("TaoChuyenDi") {TaoChuyenDiScreen() }
-                         composable("XacNhanGhep") {XacNhanGhepScreen() }
-                         composable("TheoDoiLoTrinhChungUser") { TheoDoiLoTrinhChungUserScreen() }
-                         composable("XacNhanHoanThanh") { XacNhanHoanThanhScreen() }
-                         composable("Chat") {ChatScreen(navController) }
-                          composable("ChatDriver") {ChatDriverScreen(navController) }
+                        composable("HoSoDriver") {HoSoDriverScreen(navController) }
+                        composable("TaoChuyenDi") {TaoChuyenDiScreen() }
+                        composable("XacNhanGhep") {XacNhanGhepScreen() }
+                        composable("TheoDoiLoTrinhChungUser") { TheoDoiLoTrinhChungUserScreen() }
+                        composable("XacNhanHoanThanh") { XacNhanHoanThanhScreen() }
+                        composable("Chat") {ChatScreen(navController) }
+                        composable("ChatDriver") {ChatDriverScreen(navController) }
+                        composable("HoSoUser") {HoSoUserScreen(navController) }
+                        composable("ThongBao") {ThongBaoScreen(navController) }
+                        composable("HomeDriver") { HomeDriverScreen(navController) }
 
 
 
