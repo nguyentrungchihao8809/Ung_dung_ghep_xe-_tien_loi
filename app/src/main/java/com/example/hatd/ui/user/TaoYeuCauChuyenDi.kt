@@ -2,11 +2,12 @@ package com.example.hatd.ui.user.TaoYeuCauChuyenDiScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
@@ -14,18 +15,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.hatd.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TaoYeuCauChuyenDiScreen(onBackClick: () -> Unit = {}) {
+fun TaoYeuCauChuyenDiScreen(navController: NavController) {
     var diemDi by remember { mutableStateOf("") }
     var diemDen by remember { mutableStateOf("") }
 
@@ -41,7 +43,7 @@ fun TaoYeuCauChuyenDiScreen(onBackClick: () -> Unit = {}) {
             contentDescription = null,
             modifier = Modifier
                 .fillMaxSize()
-                .alpha(0.9f), // làm nền hơi trong suốt để text dễ đọc
+                .alpha(0.9f),
             contentScale = ContentScale.Crop
         )
 
@@ -52,34 +54,34 @@ fun TaoYeuCauChuyenDiScreen(onBackClick: () -> Unit = {}) {
                 .padding(16.dp)
         ) {
 
-            // Hàng tiêu đề
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+            // ✅ Nút quay lại - ĐÃ THAY ĐỔI
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp)
             ) {
-                IconButton(onClick = { onBackClick() }) {
-                    Icon(
-                        Icons.Default.ArrowBack,
-                        contentDescription = "Back",
-                        tint = Color.Black
-                    )
-                }
+                Image(
+                    painter = painterResource(id = R.drawable.backicon),
+                    contentDescription = "Quay lại",
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .size(40.dp)
+                        .offset(y=15.dp)
+                        .clickable {
+                            navController.popBackStack()
+                        },
+                    contentScale = ContentScale.Fit
+                )
 
                 // Căn giữa chữ "Đi cùng HATD"
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center
-
-                ) {
-                    Text(
-                        text = "Đi cùng HATD",
-                        color = Color(0xFF1976D2),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 22.sp,
-                        modifier = Modifier.padding(top = 30.dp)
-                    )
-
-                }
+                Text(
+                    text = "Đi cùng HATD",
+                    color = Color(0xFF1976D2),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 22.sp,
+                    modifier = Modifier.align(Alignment.Center)
+                        .offset(y=15.dp)
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -127,11 +129,10 @@ fun TaoYeuCauChuyenDiScreen(onBackClick: () -> Unit = {}) {
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
                 fontSize = 20.sp,
-                modifier = Modifier.padding(start= 20.dp,top = 20.dp)
+                modifier = Modifier.padding(start = 20.dp, top = 20.dp)
             )
 
-
-            Spacer(modifier = Modifier.height(8.dp,))
+            Spacer(modifier = Modifier.height(8.dp))
 
             if (nearbyPlaces.isEmpty()) {
                 Box(
