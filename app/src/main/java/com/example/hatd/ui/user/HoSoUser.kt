@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -21,29 +22,31 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.navigation.NavController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hatd.R
 
 @Composable
 fun HoSoUserScreen(
-    onBackClick: () -> Unit = {},
-    onLogoutClick: () -> Unit = {}
-) {
+    navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
-       
+        //  Nút quay lại
         Image(
-            painter = painterResource(id = R.drawable.back), 
+            painter = painterResource(id = R.drawable.backicon),
             contentDescription = "Quay lại",
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .padding(top = 48.dp, start = 10.dp)
+                .padding(top = 40.dp, start = 12.dp)
                 .size(40.dp)
-                .clickable { onBackClick() },
+                .clip(CircleShape)
+                .background(Color.White.copy(alpha = 0.8f)) // nền mờ nhẹ
+                .clickable {
+                    navController.navigateUp(/*-------------*/)  },
             contentScale = ContentScale.Fit
         )
 
@@ -95,23 +98,14 @@ fun HoSoUserScreen(
                                 .clip(RoundedCornerShape(50.dp))
                         )
                         Spacer(modifier = Modifier.width(16.dp))
-                        Column {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(
-                                    text = "Kiim Bầu - 5.0 ",
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 18.sp,
-                                    color = Color.Black
-                                )
 
-                                Image(
-                                    painter = painterResource(id = R.drawable.ngoisao),
-                                    contentDescription = "Đánh giá 5 sao",
-                                    modifier = Modifier
-                                        .size(20.dp)
-                                        .padding(start = 2.dp)
-                                )
-                            }
+                        Column {
+                            Text(
+                                text = "Kiim Bầu",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 18.sp,
+                                color = Color.Black
+                            )
 
                             Text(
                                 text = "0375242005",
@@ -254,13 +248,22 @@ fun HoSoUserScreen(
             Spacer(modifier = Modifier.height(35.dp))
 
             // ===== NÚT ĐĂNG XUẤT =====
-            TextButton(onClick = onLogoutClick) {
+            Button(
+                onClick = {
+                    navController.navigate("login_screen") {
+                        popUpTo(0) { inclusive = true }
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent
+                ),
+                elevation = ButtonDefaults.buttonElevation(0.dp)
+            ) {
                 Text(
                     text = "Đăng xuất",
                     fontSize = 22.sp,
                     color = Color.Black,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
+                    fontWeight = FontWeight.Bold
                 )
             }
 
