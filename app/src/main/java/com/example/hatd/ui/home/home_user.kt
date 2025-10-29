@@ -33,10 +33,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.navigation.NavController
 
 
 @Composable
-fun HomeUserScreen() {
+fun HomeUserScreen(navController: NavController) {
     // State cho thanh tìm kiếm
     var searchText by remember { mutableStateOf(TextFieldValue("")) }
 
@@ -55,7 +56,7 @@ fun HomeUserScreen() {
                 .height(200.dp)
         )
 
-        // ============ THÊM MỚI: Logo góc trái trên cùng ============
+        // Logo góc trái trên cùng
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -67,7 +68,6 @@ fun HomeUserScreen() {
                 modifier = Modifier.size(120.dp)
             )
         }
-        // ============ KẾT THÚC PHẦN THÊM LOGO ============
 
         // Hình ảnh bản đồ
         Image(
@@ -80,7 +80,7 @@ fun HomeUserScreen() {
                 .height(180.dp)
         )
 
-        // ============ THÊM MỚI: Thanh tìm kiếm trên bản đồ ============
+        // Thanh tìm kiếm trên bản đồ
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -110,8 +110,8 @@ fun HomeUserScreen() {
                 painter = painterResource(id = R.drawable.position),
                 contentDescription = "Định vị",
                 modifier = Modifier
-                    .size(24.dp)
-                    .clickable { /* Xử lý sự kiện click định vị */ }
+                    .size(30.dp)
+
             )
 
             // TextField tìm kiếm (ở giữa)
@@ -133,7 +133,7 @@ fun HomeUserScreen() {
                         if (searchText.text.isEmpty()) {
                             Text(
                                 text = "Bạn muốn đi đâu",
-                                color = Color(0xFF999999),
+                                color = Color(0xFF000000),
                                 fontSize = 15.sp
                             )
                         }
@@ -147,141 +147,65 @@ fun HomeUserScreen() {
                 painter = painterResource(id = R.drawable.glass),
                 contentDescription = "Tìm kiếm",
                 modifier = Modifier
-                    .size(24.dp)
-                    .clickable { /* Xử lý sự kiện tìm kiếm */ }
+                    .size(30.dp)
+                    .clickable {
+                        navController.navigate("TaoYeuCauChuyenDi")
+                    }
             )
         }
-        // ============ KẾT THÚC THANH TÌM KIẾM ============
 
-        // Box chứa các icon nhỏ (Xe máy, Ô tô, Chế độ Driver)
+        // Box chứa Chế độ Driver (full width)
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .width(300.dp)
                 .padding(16.dp)
                 .align(Alignment.BottomCenter)
                 .offset(y = -440.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Hàng chứa các Box nhỏ
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+            // Box Chế độ Driver (full width)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(75.dp)
+                    .dashedBorder(
+                        strokeWidth = 4.dp,
+                        color = Color(0xFF00BCD4),
+                        cornerRadius = 16.dp
+                    )
+                    .background(
+                        color = Color.White,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .clickable {
+                        // Chuyển trang đến màn hình Driver
+                        navController.navigate("DangKyHatd")
+                    }
+                    .padding(4.dp),
+                contentAlignment = Alignment.Center
             ) {
-                // Box nhỏ 1 (Xe máy)
-                Box(
-                    modifier = Modifier
-                        .width(95.dp)
-                        .height(75.dp)
-                        .dashedBorder(
-                            strokeWidth = 4.dp,
-                            color = Color(0xFF00BCD4),
-                            cornerRadius = 16.dp
-                        )
-                        .background(
-                            color = Color.White,
-                            shape = RoundedCornerShape(16.dp)
-                        )
-                        .padding(4.dp),
-                    contentAlignment = Alignment.Center
+                //////////////////////////////////////////////
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxSize()
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.bikehatd),
-                            contentDescription = "Xe máy",
-                            modifier = Modifier.size(45.dp)
-                        )
-                        Spacer(modifier = Modifier.height(2.dp))
-                        Text(
-                            text = "Xe máy",
-                            color = Color(0xFF787B79),
-                            style = MaterialTheme.typography.bodySmall,
-                            fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold,
-                            fontSize = 11.sp
-                        )
-                    }
-                }
-
-                // Box nhỏ 2 (Ô tô)
-                Box(
-                    modifier = Modifier
-                        .width(95.dp)
-                        .height(75.dp)
-                        .dashedBorder(
-                            strokeWidth = 4.dp,
-                            color = Color(0xFF00BCD4),
-                            cornerRadius = 16.dp
-                        )
-                        .background(
-                            color = Color.White,
-                            shape = RoundedCornerShape(16.dp)
-                        )
-                        .padding(4.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.carhatd),
-                            contentDescription = "Ô tô",
-                            modifier = Modifier.size(45.dp)
-                        )
-                        Spacer(modifier = Modifier.height(2.dp))
-                        Text(
-                            text = "Ô tô",
-                            color = Color(0xFF787B79),
-                            style = MaterialTheme.typography.bodySmall,
-                            fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold,
-                            fontSize = 11.sp
-                        )
-                    }
-                }
-
-                // Box nhỏ 3 (Chế độ Driver)
-                Box(
-                    modifier = Modifier
-                        .width(95.dp)
-                        .height(75.dp)
-                        .dashedBorder(
-                            strokeWidth = 4.dp,
-                            color = Color(0xFF00BCD4),
-                            cornerRadius = 16.dp
-                        )
-                        .background(
-                            color = Color.White,
-                            shape = RoundedCornerShape(16.dp)
-                        )
-                        .padding(4.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.drivermode),
-                            contentDescription = "Chế độ Driver",
-                            modifier = Modifier.size(45.dp)
-                        )
-                        Spacer(modifier = Modifier.height(2.dp))
-                        Text(
-                            text = "Chế độ Driver",
-                            color = Color(0xFF787B79),
-                            style = MaterialTheme.typography.bodySmall,
-                            fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold,
-                            fontSize = 9.sp,
-                            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                            lineHeight = 10.sp,
-                            maxLines = 2
-                        )
-                    }
+                    Image(
+                        painter = painterResource(id = R.drawable.drivermode),
+                        contentDescription = "Chế độ Driver",
+                        modifier = Modifier
+                            .size(60.dp)
+                            .offset(x = -5.dp, y = 0.dp)
+                    )
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Text(
+                        text = "Chế độ Driver",
+                        color = Color(0xFF787B79),
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold,
+                        fontSize = 19.sp,
+                        modifier = Modifier.offset(x = -8.dp, y = 0.dp)  // <-- THÊM DÒNG NÀY cho text
+                    )
                 }
             }
         }
@@ -413,7 +337,7 @@ fun HomeUserScreen() {
             }
         }
 
-        // ============ THÊM MỚI: Box chứa 3 icon ở FOOTER - Cuối màn hình ============
+        // Box chứa 3 icon ở FOOTER - Cuối màn hình
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -431,10 +355,14 @@ fun HomeUserScreen() {
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             // Icon 1 - Notification
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.clickable {
+                    navController.navigate("ThongBao")
+                }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.bell),
@@ -443,10 +371,13 @@ fun HomeUserScreen() {
                 )
             }
 
-            // Icon 2 - History
+             // Icon 2 - History
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.clickable {
+                    navController.navigate("LichSuChuyenDi")
+                }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.clocki),
@@ -458,7 +389,10 @@ fun HomeUserScreen() {
             // Icon 3 - Profile
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.clickable {
+                    navController.navigate("HoSoUser")
+                }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.profile),
@@ -467,19 +401,18 @@ fun HomeUserScreen() {
                 )
             }
         }
-        // ============ KẾT THÚC PHẦN THÊM MỚI ============
     }
 }
 
 // Function tạo viền đứt nét
 fun Modifier.dashedBorder(
-    strokeWidth: Dp = 8.dp, // Độ dày viền (tăng để in đậm viền)
+    strokeWidth: Dp = 12.dp, // Độ dày viền (tăng để in đậm viền)
     color: Color = Color(0xFF00BCD4), // Màu viền
     cornerRadius: Dp = 16.dp // Góc bo viền
 ) = this.drawBehind {
     val stroke = strokeWidth.toPx() // Chuyển đổi độ dày từ Dp sang Px
-    val dashWidth = 30f // Độ dài mỗi đoạn nét đứt
-    val dashGap = 10f // Khoảng cách giữa các đoạn nét đứt
+    val dashWidth = 20f // Độ dài mỗi đoạn nét đứt
+    val dashGap = 5f // Khoảng cách giữa các đoạn nét đứt
     val radius = cornerRadius.toPx() // Chuyển đổi góc bo từ Dp sang Px
 
     // Vẽ viền với hiệu ứng đường nét đứt
