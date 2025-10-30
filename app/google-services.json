@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "632169432835",
+    "project_id": "hatd-4d1bc",
+    "storage_bucket": "hatd-4d1bc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632169432835:android:58c16d22821c96a59f0b36",
+        "android_client_info": {
+          "package_name": "com.example.myhatd"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9dZW9DchLK3Lmn1Afk2lv6VPSwyb9oJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
