@@ -85,9 +85,9 @@ fun ChiTietChuyenDiScreen(onBackClick: () -> Unit = {}) {
                             painter = painterResource(id = R.drawable.anhuser),
                             contentDescription = "Ảnh user",
                             modifier = Modifier
-                                .size(80.dp)
-                                .background(Color.White, CircleShape)
-                                .border(2.dp, Color(0xFF0081F1), CircleShape)
+                                .size(100.dp)
+                                .clip(CircleShape)
+
                         )
 
                     }
@@ -118,7 +118,7 @@ fun ChiTietChuyenDiScreen(onBackClick: () -> Unit = {}) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 🔹 Phần thông tin chuyến đi giữ nguyên
+        // 🔹 Phần thông tin chuyến đi
         Box(
             modifier = Modifier
                 .fillMaxWidth()
