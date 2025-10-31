@@ -90,15 +90,6 @@ fun ChiTietChuyenDiScreen(onBackClick: () -> Unit = {}) {
                                 .border(2.dp, Color(0xFF0081F1), CircleShape)
                         )
 
-                        // Ảnh xe máy nhỏ chéo bên dưới
-                        Image(
-                            painter = painterResource(id = R.drawable.xegocduoitrai),
-                            contentDescription = "Xe máy",
-                            modifier = Modifier
-                                .size(50.dp)
-                                .align(Alignment.BottomEnd)
-                                .offset(x = 6.dp, y = 6.dp)
-                        )
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
