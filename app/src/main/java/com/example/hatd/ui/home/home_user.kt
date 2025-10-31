@@ -70,15 +70,60 @@ fun HomeUserScreen(navController: NavController) {
         }
 
         // Hình ảnh bản đồ
-        Image(
-            painter = painterResource(id = R.drawable.maphome),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
+         val context = LocalContext.current
+        val fLpc = remember { LocationServices.getFusedLocationProviderClient(context) }
+
+// Trạng thái vị trí người dùng
+        var userLocation by remember { mutableStateOf<LatLng?>(null) }
+        val defaultLocation = LatLng(21.028511, 105.804817) // Hà Nội
+        val cameraPositionState = rememberCameraPositionState {
+            position = CameraPosition.fromLatLngZoom(defaultLocation, 12f)
+        }
+
+// Hàm lấy vị trí cuối cùng
+        val fetchLastLocation: () -> Unit = {
+            fLpc.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    val latLng = LatLng(location.latitude, location.longitude)
+                    userLocation = latLng
+                    cameraPositionState.position = CameraPosition.fromLatLngZoom(latLng, 15f)
+                }
+            }
+        }
+
+// Xin quyền
+        val permissionLauncher = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted) fetchLastLocation()
+        }
+
+        LaunchedEffect(Unit) {
+            when {
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED -> fetchLastLocation()
+                else -> permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            }
+        }
+
+// Google Map
+        GoogleMap(
             modifier = Modifier
                 .offset(y = 180.dp)
                 .fillMaxWidth()
-                .height(180.dp)
-        )
+                .height(180.dp),
+            cameraPositionState = cameraPositionState
+        ) {
+            userLocation?.let { location ->
+                Marker(
+                    state = MarkerState(position = location),
+                    title = "Vị trí của bạn",
+                    snippet = "Vị trí hiện tại"
+                )
+            }
+        }
 
         // Thanh tìm kiếm trên bản đồ
         Row(
@@ -427,3 +472,4 @@ fun Modifier.dashedBorder(
         cornerRadius = CornerRadius(radius) // Góc bo tròn
     )
 }
+
