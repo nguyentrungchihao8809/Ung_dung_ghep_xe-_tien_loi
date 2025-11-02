@@ -20,16 +20,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.hatd.R
 
 @Composable
-fun DangKyHATDScreen(navController: NavController) {
+fun DangKyHatdScreen(navController: NavController) {
     var anhChanDungMoRong by remember { mutableStateOf(false) }
-    var bangLaiXeMoRong by remember { mutableStateOf(false) }
-    var canCuocMoRong by remember { mutableStateOf(false) }
+    var bienSoXe by remember { mutableStateOf("") }
+    var soCCCD by remember { mutableStateOf("") }
+    var gioiTinhMoRong by remember { mutableStateOf(false) }
+    var gioiTinhDaChon by remember { mutableStateOf("") }
+    var hangXeDaChon by remember { mutableStateOf("") }
+
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -74,7 +79,7 @@ fun DangKyHATDScreen(navController: NavController) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(680.dp)
+                        .height(900.dp)
                         .padding(top = 125.dp)
                         .border(3.dp, Color(0xFF4ABDE0), RoundedCornerShape(16.dp)),
                     shape = RoundedCornerShape(16.dp),
@@ -123,30 +128,163 @@ fun DangKyHATDScreen(navController: NavController) {
 
                         Spacer(modifier = Modifier.height(24.dp))
 
-                        // Các mục dropdown
+                        // Ảnh Chân Dung
                         MucMoRong(
                             tieuDe = "Ảnh Chân Dung",
                             daMoRong = anhChanDungMoRong,
                             khiBamVao = { anhChanDungMoRong = !anhChanDungMoRong },
-                            chieuDaiGachXanh = 135f // Tự chỉnh độ dài này
+                            chieuDaiGachXanh = 135f
                         )
 
                         Spacer(modifier = Modifier.height(16.dp))
 
-                        MucMoRong(
-                            tieuDe = "Bằng Lái Xe",
-                            daMoRong = bangLaiXeMoRong,
-                            khiBamVao = { bangLaiXeMoRong = !bangLaiXeMoRong },
-                            chieuDaiGachXanh = 105f // Tự chỉnh độ dài này
+                        // Biển số xe
+                        OutlinedTextField(
+                            value = bienSoXe,
+                            onValueChange = { bienSoXe = it },
+                            label = { Text("Biển số xe") },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = Color(0xFF4ABDE0),
+                                unfocusedBorderColor = Color(0xFF333333),
+                                focusedLabelColor = Color(0xFF000000),
+                                unfocusedLabelColor = Color(0xFF666666),
+                                cursorColor = Color(0xFF000000),
+                                focusedTextColor = Color(0xFF000000),
+                                unfocusedTextColor = Color(0xFF000000)
+                            ),
+                            shape = RoundedCornerShape(12.dp)
                         )
 
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(16.dp))
 
-                        MucMoRong(
-                            tieuDe = "Căn cước công dân",
-                            daMoRong = canCuocMoRong,
-                            khiBamVao = { canCuocMoRong = !canCuocMoRong },
-                            chieuDaiGachXanh = 165f // Tự chỉnh độ dài này
+                        // Số CCCD
+                        OutlinedTextField(
+                            value = soCCCD,
+                            onValueChange = { soCCCD = it },
+                            label = { Text("Căn cước công dân") },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = Color(0xFF4ABDE0),
+                                unfocusedBorderColor = Color(0xFF333333),
+                                focusedLabelColor = Color(0xFF000000),
+                                unfocusedLabelColor = Color(0xFF666666),
+                                cursorColor = Color(0xFF000000),
+                                focusedTextColor = Color(0xFF000000),
+                                unfocusedTextColor = Color(0xFF000000)
+                            ),
+                            shape = RoundedCornerShape(12.dp)
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        // Giới tính Dropdown
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable(
+                                    onClick = { gioiTinhMoRong = !gioiTinhMoRong },
+                                    indication = null,
+                                    interactionSource = remember { MutableInteractionSource() }
+                                )
+                        ) {
+                            OutlinedTextField(
+                                value = gioiTinhDaChon,
+                                onValueChange = { },
+                                label = { Text("Giới tính") },
+                                readOnly = true,
+                                enabled = false,
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    disabledBorderColor = Color(0xFF333333),
+                                    disabledLabelColor = if (gioiTinhDaChon.isEmpty()) Color(0xFF666666) else Color(0xFF000000),
+                                    disabledTextColor = Color(0xFF000000)
+                                ),
+                                shape = RoundedCornerShape(12.dp),
+                                trailingIcon = {
+                                    Text(
+                                        text = if (gioiTinhMoRong) "▲" else "▼",
+                                        fontSize = 16.sp,
+                                        color = Color(0xFF666666),
+                                        modifier = Modifier.padding(end = 8.dp)
+                                    )
+                                }
+                            )
+                            DropdownMenu(
+                                expanded = gioiTinhMoRong,
+                                onDismissRequest = { gioiTinhMoRong = false },
+                                modifier = Modifier
+                                    .fillMaxWidth(0.85f)
+                                    .background(Color.White, RoundedCornerShape(12.dp))
+                                    .border(2.dp, Color(0xFF4ABDE0), RoundedCornerShape(12.dp))
+                            ) {
+                                val genderOptions = listOf(
+                                    "Nam" to "♂",
+                                    "Nữ" to "♀",
+                                    "Khác" to "⚥"
+                                )
+
+                                genderOptions.forEachIndexed { index, (gioiTinh, icon) ->
+                                    DropdownMenuItem(
+                                        text = {
+                                            Row(
+                                                modifier = Modifier.fillMaxWidth(),
+                                                verticalAlignment = Alignment.CenterVertically,
+                                                horizontalArrangement = Arrangement.Start
+                                            ) {
+                                                Text(
+                                                    text = icon,
+                                                    fontSize = 20.sp,
+                                                    color = Color(0xFF4ABDE0),
+                                                    modifier = Modifier.padding(end = 12.dp)
+                                                )
+                                                Text(
+                                                    text = gioiTinh,
+                                                    fontSize = 16.sp,
+                                                    fontWeight = if (gioiTinhDaChon == gioiTinh) FontWeight.Bold else FontWeight.Medium,
+                                                    color = if (gioiTinhDaChon == gioiTinh) Color(0xFF4ABDE0) else Color(0xFF333333)
+                                                )
+                                            }
+                                        },
+                                        onClick = {
+                                            gioiTinhDaChon = gioiTinh
+                                            gioiTinhMoRong = false
+                                        },
+                                        modifier = Modifier
+                                            .background(
+                                                if (gioiTinhDaChon == gioiTinh) Color(0xFFE8F8FA) else Color.Transparent
+                                            )
+                                            .padding(vertical = 4.dp)
+                                    )
+                                    if (index < genderOptions.size - 1) {
+                                        HorizontalDivider(
+                                            modifier = Modifier.padding(horizontal = 12.dp),
+                                            thickness = 1.dp,
+                                            color = Color(0xFFE0E0E0)
+                                        )
+                                    }
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        // Hãng xe
+                        OutlinedTextField(
+                            value = hangXeDaChon,
+                            onValueChange = { hangXeDaChon = it },
+                            label = { Text("Hãng xe") },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = Color(0xFF4ABDE0),
+                                unfocusedBorderColor = Color(0xFF333333),
+                                focusedLabelColor = Color(0xFF000000),
+                                unfocusedLabelColor = Color(0xFF666666),
+                                cursorColor = Color(0xFF000000),
+                                focusedTextColor = Color(0xFF000000),
+                                unfocusedTextColor = Color(0xFF000000)
+                            ),
+                            shape = RoundedCornerShape(12.dp)
                         )
 
                         Spacer(modifier = Modifier.height(24.dp))
@@ -156,7 +294,7 @@ fun DangKyHATDScreen(navController: NavController) {
                             onClick = { /* ////// */ },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .offset(y=20.dp)
+                                .offset(y = 20.dp)
                                 .height(90.dp),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFF25C8CD)
@@ -197,7 +335,7 @@ fun MucMoRong(
     tieuDe: String,
     daMoRong: Boolean,
     khiBamVao: () -> Unit,
-    chieuDaiGachXanh: Float = 160f // Thêm tham số này để chỉnh riêng từng cái
+    chieuDaiGachXanh: Float = 160f
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -226,7 +364,6 @@ fun MucMoRong(
                         val doLeX = 0.dp.toPx()
                         val banKinhGoc = 8.dp.toPx()
 
-                        // Tự điền số vào đây
                         val chieuDaiGachXanhPx = chieuDaiGachXanh.dp.toPx()
                         val chieuDaiGachDen = 330.dp.toPx()
 
