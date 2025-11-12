@@ -29,7 +29,7 @@ class FirebaseAuthService(private val activity: Activity) {
     /**
      * Gửi yêu cầu xác minh số điện thoại đến Firebase.
      */
-    fun sendVerificationCode(phoneNumber: String) {
+    fun sendVerificationCode(phoneNumber: String, activity: Activity) {
         val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {

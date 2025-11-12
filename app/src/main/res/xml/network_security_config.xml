@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<network-security-config>
+    <!--
+    Cấu hình bảo mật mạng (Network Security Configuration)
+    Mục đích: Cho phép truy cập không mã hóa (Cleartext Traffic / HTTP)
+    đến các server local (cục bộ) để phục vụ việc phát triển và thử nghiệm.
+    -->
+
+    <domain-config cleartextTrafficPermitted="true">
+
+        <!--
+            Domain cho phép: Địa chỉ IP của máy tính cá nhân
+            (nơi server Spring Boot đang chạy).
+            Đây là BẮT BUỘC để điện thoại thật (physical device) kết nối được.
+
+            LƯU Ý: Nếu IP máy tính thay đổi, phải cập nhật lại dòng này.
+        -->
+        <domain includeSubdomains="true">172.17.196.236</domain>
+
+        <!--
+            Domain cho phép: Địa chỉ loopback mặc định của Android Emulator.
+            Đảm bảo Emulator cũng có thể kết nối thành công.
+        -->
+        <domain includeSubdomains="true">10.0.2.2</domain>
+
+        <!-- TODO: Thêm các địa chỉ IP nội bộ khác nếu có (ví dụ: 192.168.0.x) -->
+
+    </domain-config>
+
+    <!--
+        Cấu hình mặc định (Base Configuration):
+        Đảm bảo tất cả các kết nối đến các domain công cộng khác
+        (như Google, Facebook, v.v.) vẫn sử dụng HTTPS (bảo mật)
+        và tin tưởng vào các chứng chỉ hệ thống.
+    -->
+    <base-config>
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+
+</network-security-config>

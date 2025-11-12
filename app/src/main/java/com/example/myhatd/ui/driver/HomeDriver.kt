@@ -1,4 +1,4 @@
-package com.example.myhatd.ui.home
+package com.example.myhatd.ui.driver
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -29,9 +29,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,19 +53,18 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.myhatd.R
-import com.example.myhatd.viewmodel.MapViewModel
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.google.android.gms.maps.CameraUpdateFactory
-
 
 
 /**
  * 1. Composable Tái sử dụng: Ô tìm kiếm chỉ đọc có thể nhấp
+ * Sử dụng Spacer + clickable để đảm bảo sự kiện chạm được kích hoạt.
  */
 @Composable
 fun RowScope.ClickableSearchBox(
@@ -121,61 +121,39 @@ fun RowScope.ClickableSearchBox(
 // -----------------------------------------------------------
 
 @Composable
-fun HomeUserScreen(
-    navController: NavController,
-    mapViewModel: MapViewModel // ✅ ĐÃ THÊM THAM SỐ
-) {
+fun HomeDriverScreen(navController: NavController) {
+
+    // --- Logic Bản đồ và Vị trí ---
     val context = LocalContext.current
-
-    // ✅ SỬ DỤNG TRẠNG THÁI VỊ TRÍ TỪ VIEWMODEL
-    val mapUiState by mapViewModel.uiState.collectAsState()
-    val userLocation = mapUiState.lastKnownLocation // LatLng?
-
+    val fLpc = remember { LocationServices.getFusedLocationProviderClient(context) }
+    var userLocation by remember { mutableStateOf<LatLng?>(null) }
     val defaultLocation = LatLng(21.028511, 105.804817) // Hà Nội
-
-    // ✅ Cập nhật cameraPositionState dựa trên trạng thái của ViewModel
-    val initialCameraLocation = userLocation ?: defaultLocation
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(initialCameraLocation, 12f)
+        position = CameraPosition.fromLatLngZoom(defaultLocation, 12f)
     }
 
-    // Khi vị trí người dùng thay đổi, di chuyển camera (animation tốt hơn)
-    LaunchedEffect(userLocation) {
-        userLocation?.let {
-            // 1. Tạo CameraPosition mới
-            val newCameraPosition = CameraPosition.fromLatLngZoom(it, 15f)
-
-            // 2. Chuyển đổi CameraPosition sang CameraUpdate
-            val cameraUpdate = CameraUpdateFactory.newCameraPosition(newCameraPosition)
-
-            // 3. Sử dụng CameraUpdate để animate
-            cameraPositionState.animate(
-                update = cameraUpdate, // ✅ Đã sửa lỗi: Truyền CameraUpdate
-                durationMs = 1000
-            )
+    val fetchLastLocation: () -> Unit = {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fLpc.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    val latLng = LatLng(location.latitude, location.longitude)
+                    userLocation = latLng
+                    cameraPositionState.position = CameraPosition.fromLatLngZoom(latLng, 15f)
+                }
+            }
         }
     }
-    // ✅ LOGIC XIN CẤP QUYỀN VỊ TRÍ VÀ GỌI VIEWMODEL (Dùng hàm requestCurrentLocation đã sửa)
+
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
-        mapViewModel.setLocationPermission(isGranted) // Cập nhật trạng thái quyền
-        if (isGranted) {
-            // GỌI HÀM LẤY VỊ TRÍ MỚI NHẤT
-            mapViewModel.requestCurrentLocation(context)
-        }
+        if (isGranted) fetchLastLocation()
     }
 
     LaunchedEffect(Unit) {
         when {
-            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED -> {
-                mapViewModel.setLocationPermission(true)
-                // GỌI HÀM LẤY VỊ TRÍ MỚI NHẤT
-                mapViewModel.requestCurrentLocation(context)
-            }
-            else -> {
-                permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION) // Yêu cầu quyền
-            }
+            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED -> fetchLastLocation()
+            else -> permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
 
@@ -215,7 +193,7 @@ fun HomeUserScreen(
                 .height(180.dp),
             cameraPositionState = cameraPositionState
         ) {
-            userLocation?.let { location -> // Sử dụng userLocation từ ViewModel
+            userLocation?.let { location ->
                 Marker(
                     state = MarkerState(position = location),
                     title = "Vị trí của bạn",
@@ -259,7 +237,7 @@ fun HomeUserScreen(
             // Compose đã sửa lỗi (ClickableSearchBox)
             ClickableSearchBox(
                 onFieldClick = {
-                    navController.navigate("tao_yeu_cau_chuyen_di")
+                    navController.navigate("driver_tao_yeu_cau_chuyen_di")
                 }
             )
 
@@ -302,19 +280,19 @@ fun HomeUserScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxSize()
                         .clickable {
-                            navController.navigate("dang_ky_driver")
+                            navController.navigate("home")
                         }
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.drivermode),
-                        contentDescription = "Chế độ Driver",
+                        painter = painterResource(id = R.drawable.usermode),
+                        contentDescription = "Chế độ Người đi",
                         modifier = Modifier
                             .size(60.dp)
                             .offset(x = -5.dp, y = 0.dp)
                     )
                     Spacer(modifier = Modifier.width(12.dp))
                     Text(
-                        text = "Chế độ Driver",
+                        text = "Chế độ Người đi",
                         color = Color(0xFF787B79),
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.SemiBold,
@@ -510,7 +488,7 @@ fun HomeUserScreen(
                     contentDescription = "Hồ sơ",
                     modifier = Modifier.size(70.dp)
                         .clickable {
-                            navController.navigate("ho_so_user")
+                            navController.navigate("ho_so_driver")
                         }
                 )
             }

@@ -1,81 +1,3 @@
-//// Thư mục: ui
-//// File: PhoneAuthScreen.kt
-//
-//package com.example.myhatd.ui.otp
-//
-//import androidx.compose.foundation.layout.*
-//import androidx.compose.material3.*
-//import androidx.compose.runtime.*
-//import androidx.compose.ui.Alignment
-//import androidx.compose.ui.Modifier
-//import androidx.compose.ui.platform.LocalContext
-//import androidx.compose.ui.unit.dp
-//import androidx.lifecycle.viewmodel.compose.viewModel
-//import com.example.myhatd.viewmodel.AuthViewModel
-//
-//// KHÔNG CẦN import androidx.compose.ui.text.input.KeyboardOptions hay KeyboardType
-//
-//@Composable
-//fun PhoneAuthScreen() {
-//    val context = LocalContext.current
-//
-//    // 1. Lấy Activity bằng hàm mở rộng an toàn (YÊU CẦU FILE Utils.kt)
-//    val activity = remember(context) { context.findActivity() }
-//
-//    if (activity == null) {
-//        Text("Lỗi: Không thể tìm thấy Activity cho Firebase Auth.", color = MaterialTheme.colorScheme.error)
-//        return
-//    }
-//
-//    // 2. Khởi tạo ViewModel
-//    val viewModel: AuthViewModel = viewModel(factory = AuthViewModel.Factory(activity))
-//
-//    val state = viewModel.state
-//
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .padding(24.dp),
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center
-//    ) {
-//        Text(text = "Đăng nhập bằng Số điện thoại", style = MaterialTheme.typography.headlineMedium)
-//        Spacer(modifier = Modifier.height(32.dp))
-//
-//        // Input nhập số điện thoại
-//        OutlinedTextField(
-//            value = state.phoneNumber,
-//            onValueChange = viewModel::onPhoneNumberChange,
-//            label = { Text("Số điện thoại (VD: +8490xxxxxxx)") },
-//            modifier = Modifier.fillMaxWidth()
-//            // ĐÃ XÓA hoàn toàn tham số keyboardOptions, bàn phím sẽ là mặc định (Text)
-//        )
-//        Spacer(modifier = Modifier.height(16.dp))
-//
-//        // Nút gửi OTP
-//        Button(
-//            onClick = viewModel::sendOtp,
-//            enabled = !state.isLoading && !state.isOtpSent,
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            if (state.isLoading) {
-//                CircularProgressIndicator(modifier = Modifier.size(20.dp), color = MaterialTheme.colorScheme.onPrimary)
-//            } else {
-//                Text(if (state.isOtpSent) "Mã đã gửi (Tiếp tục)" else "Gửi Mã OTP")
-//            }
-//        }
-//
-//        Spacer(modifier = Modifier.height(12.dp))
-//
-//        // Hiển thị thông báo
-//        if (state.error != null) {
-//            Text(text = "Lỗi: ${state.error}", color = MaterialTheme.colorScheme.error)
-//        } else if (state.isOtpSent) {
-//            Text(text = "Mã OTP đã gửi thành công! ID: ${state.verificationId}", color = MaterialTheme.colorScheme.primary)
-//            Text(text = "Chuyển sang màn hình nhập OTP...", style = MaterialTheme.typography.bodySmall)
-//        }
-//    }
-//}
 
 package com.example.myhatd.ui.otp
 
@@ -102,17 +24,21 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle // ✅ Cần cho StateFlow
+import androidx.navigation.NavController
 import com.example.myhatd.R
 import com.example.myhatd.viewmodel.AuthViewModel
-import androidx.compose.foundation.BorderStroke
-import androidx.navigation.NavController
 import com.example.myhatd.ui.navigation.NavigationRoutes
-
-
+import androidx.compose.foundation.BorderStroke
 
 @Composable
-fun PhoneAuthScreen(viewModel: AuthViewModel,
-                    navController: NavController) {
+fun PhoneAuthScreen(
+    // ✅ AuthViewModel NÊN được truyền vào từ AppNavigation,
+    //    hoặc lấy bằng viewModel() trong Composable này nếu nó là điểm khởi đầu.
+    //    Tôi sẽ giữ lại cấu trúc của bạn nhưng đảm bảo truy cập state đúng.
+    viewModel: AuthViewModel = viewModel(), // Giữ lại để dễ sử dụng
+    navController: NavController
+) {
     val context = LocalContext.current
     val activity = remember(context) { context.findActivity() }
 
@@ -121,9 +47,16 @@ fun PhoneAuthScreen(viewModel: AuthViewModel,
         return
     }
 
-//    val viewModel: AuthViewModel = viewModel(factory = AuthViewModel.Factory(activity))
-    val state = viewModel.state
+    // ✅ TRUY CẬP STATEFLOW ĐÚNG CÁCH
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
+    // 1. Logic Khởi tạo ViewModel (Chỉ cần nếu bạn không truyền ViewModel từ ngoài)
+    // Nếu bạn muốn ViewModel tồn tại suốt ứng dụng, hãy khởi tạo nó trong AppNavigation
+    // và truyền xuống. Giả định bạn đã truyền nó hoặc đã khởi tạo đúng.
+    // Dòng này cần được cập nhật nếu ViewModel.Factory yêu cầu AuthRepository:
+    // val viewModel: AuthViewModel = viewModel(factory = AuthViewModel.Factory(activity, /* repo */))
+
+    // 2. LOGIC ĐIỀU HƯỚNG
     LaunchedEffect(state.isOtpSent) {
         if (state.isOtpSent) {
             navController.navigate(NavigationRoutes.VERIFY_OTP)
@@ -154,9 +87,10 @@ fun PhoneAuthScreen(viewModel: AuthViewModel,
         ) {
             // Nút quay lại
             IconButton(
-                onClick = {navController.popBackStack() },
-                Modifier.align(Alignment.Start)
-                    .offset(x = -5.dp, y = (-1).dp)
+                onClick = { navController.popBackStack() },
+                Modifier
+                    .align(Alignment.Start)
+                    .offset(x = (-5).dp, y = (-1).dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.back),
@@ -226,7 +160,7 @@ fun PhoneAuthScreen(viewModel: AuthViewModel,
                 )
             }
 
-            // Input nhập số điện thoại, giữ logic file 1
+            // Input nhập số điện thoại
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -237,6 +171,7 @@ fun PhoneAuthScreen(viewModel: AuthViewModel,
                     .padding(horizontal = 12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                // ... (Phần Icon cờ VN và Divider) ...
                 Image(
                     painter = painterResource(id = R.drawable.vn),
                     contentDescription = "Vietnam flag",
@@ -252,17 +187,11 @@ fun PhoneAuthScreen(viewModel: AuthViewModel,
                         .background(Color.Gray)
                 )
                 Spacer(modifier = Modifier.width(10.dp))
+                // ... (End phần Icon) ...
 
-//                Text(
-//                    text = "+84",
-//                    fontWeight = FontWeight.Bold,
-//                    fontSize = 16.sp,
-//                    color = Color.Black
-//                )
-
-                Spacer(modifier = Modifier.width(12.dp))
 
                 OutlinedTextField(
+                    // ✅ Truy cập state.phoneNumber
                     value = state.phoneNumber,
                     onValueChange = viewModel::onPhoneNumberChange,
                     placeholder = { Text("96691599", color = Color.Gray) },
@@ -282,15 +211,15 @@ fun PhoneAuthScreen(viewModel: AuthViewModel,
                         focusedPlaceholderColor = Color.Gray,
                         unfocusedPlaceholderColor = Color.Gray
                     )
-
                 )
             }
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Nút gửi OTP, giữ logic file 1
+            // Nút gửi OTP
             Button(
-                onClick = viewModel::sendOtp,
+                onClick = { viewModel.sendOtp(activity) },
+                // ✅ Dùng state.isOtpSent từ StateFlow
                 enabled = !state.isLoading && !state.isOtpSent,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -305,10 +234,11 @@ fun PhoneAuthScreen(viewModel: AuthViewModel,
                 if (state.isLoading) {
                     CircularProgressIndicator(
                         modifier = Modifier.size(20.dp),
-                        color = MaterialTheme.colorScheme.onPrimary
+                        color = Color.Black // Dùng màu phù hợp với border
                     )
                 } else {
                     Text(
+                        // ✅ Dùng state.isOtpSent từ StateFlow
                         text = if (state.isOtpSent) "Mã đã gửi (Tiếp tục)" else "Gửi Mã OTP",
                         fontSize = 20.sp
                     )
@@ -318,9 +248,11 @@ fun PhoneAuthScreen(viewModel: AuthViewModel,
             Spacer(modifier = Modifier.height(12.dp))
 
             // Hiển thị thông báo lỗi hoặc OTP ID
+            // ✅ Dùng state.error và state.verificationId
             if (state.error != null) {
                 Text(text = "Lỗi: ${state.error}", color = MaterialTheme.colorScheme.error)
             } else if (state.isOtpSent) {
+                // Có thể bỏ dòng này trong Production, chỉ dùng để Debug
                 Text(
                     text = "Mã OTP đã gửi thành công! ID: ${state.verificationId}",
                     color = MaterialTheme.colorScheme.primary
